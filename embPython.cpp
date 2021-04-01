@@ -130,26 +130,19 @@ string PySimpleRun(const char* file_name, const char* file_module, const char* i
     PyObject* pName, * pModule, * pFunc, * pArgs, * pValue;
     pName = PyUnicode_FromString(file_name);				 //set name
     pModule = PyImport_Import(pName);			 	//import python file
-    try
+
+    if (pModule)
     {
-        if (pModule)
-        {
-            pFunc = PyObject_GetAttrString(pModule, file_module);	 // Conversting
-            if (input_str)
-                pArgs = PyTuple_Pack(1, PyUnicode_FromString(input_str));// size 1 tuple
-            else
-                pArgs = nullptr;
-            pValue = PyObject_CallObject(pFunc, pArgs); //return value for pArgs
-            if (pValue)
-                return  _PyUnicode_AsString(pValue);//convert value in string *as change this part any type can be casting
-        }
+        pFunc = PyObject_GetAttrString(pModule, file_module);	 // Conversting
+        if (input_str)
+            pArgs = PyTuple_Pack(1, PyUnicode_FromString(input_str));// size 1 tuple
         else
-            throw("Error for loading module");
+            pArgs = nullptr;
+        pValue = PyObject_CallObject(pFunc, pArgs); //return value for pArgs
+        if (pValue)
+            return  _PyUnicode_AsString(pValue);//convert value in string *as change this part any type can be casting
     }
-    catch (char* const e)
-    {
-        printf("%s\n", e);
-    }
+
     Py_Finalize();
     return "";
 }
