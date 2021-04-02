@@ -1,4 +1,3 @@
-﻿
 
 #include <iostream>
 #include "embPython.h"
@@ -58,104 +57,146 @@ void stock_up_dwon()
 
 int main()
 {
-    cout << "************************\n";
-    setcolor(0, 15);
-    cout << "**[APPLE]  : \n\n";
-    cout << "**[AMAZON] : \n\n";
-    cout << "**[TESLA]  : \n\n";
-    cout << "**[MICRO]  : \n\n";
-    cout << "**[BERKS]  : \n\n";
-    cout << "**[JPM]    : \n\n";
-    cout << "**[GOLD]   : \n\n";
-    float cur_appl, cur_amaz, cur_tsla, cur_mict, cur_berk, cur_jpm, cul_gpldm;
-    float past_stock[7] = { 0, 0, 0, 0, 0, 0, 0 };
-    float cur_max[7] = { 0, 0, 0 , 0 , 0, 0, 0 };
-    float cur_min[7] = { 0, 0, 0 , 0 , 0, 0, 0 };
-    while(true)
+    bool mecro = false;
+    while (true)
     {
+        if (mecro == false)
+        {
+            system("CLS");
+            setcolor(14, 0);
+            std::printf("|-----------------------------------|\n");
+            std::printf("|                MARKET             |\n");
+            std::printf("|-----------------------------------|\n");
+            std::printf("|(A) : START                        |\n");
+            std::printf("|(M) : WAITING MARKET               |\n");
+            std::printf("|(X) : END                          |\n");
+            std::printf("|-----------------------------------|\n");
+            switch (_getch())
+            {
+            case 'a':
+                std::printf("Starting...\n");
+                break;
+            case 'm':
+                std::printf("Waiting...\n");
+                mecro = true;
+                break;
+            case 'e':
+                std::printf("End...\n");
+                return 1;
+            }
+        }
         time_t t = time(NULL);
         struct tm tm;
         localtime_s(&tm, &t);
-        while (tm.tm_hour > 6 && tm.tm_min > 29)
+
+        if (tm.tm_hour > 6 && tm.tm_min > 29 && tm.tm_hour < 13 && tm.tm_min < 0)
         {
-            setcolor(7, 0);
-            string appl = numbering_url(APPLE, FRONT, BACK);
-            printf("--");
-            string amaz = numbering_url(AMAZON, FRONT, BACK);
-            printf("--");
-            string tsla = numbering_url(TESLA, FRONT, BACK);
-            printf("--");
-            string mict = numbering_url(MICRO, FRONT, BACK);
-            printf("--");
-            string berk = numbering_url(BERKS, FRONT, BACK);
-            printf("--");
-            string jpm = numbering_url(JPMOR, FRONT, BACK);
-            printf("--");
-            string gpldm = numbering_url(GOLDM, FRONT, BACK);
-            printf(".");
+            system("CLS");
+            setcolor(14, 0);
+            cout << tm.tm_hour << ", " << tm.tm_min << endl;
+            cout << "|-------------------------------------------------------\n";
+            cout << "|--[APPLE]  : \n\n";
+            cout << "|--[AMAZON] : \n\n";
+            cout << "|--[TESLA]  : \n\n";
+            cout << "|--[MICRO]  : \n\n";
+            cout << "|--[BERKS]  : \n\n";
+            cout << "|--[JPM]    : \n\n";
+            cout << "|--[GOLD]   : \n\n";
+            float cur_appl, cur_amaz, cur_tsla, cur_mict, cur_berk, cur_jpm, cul_gpldm;
+            float past_stock[7] = { 0, 0, 0, 0, 0, 0, 0 };
+            float cur_max[7] = { 0, 0, 0 , 0 , 0, 0, 0 };
+            float cur_min[7] = { 0, 0, 0 , 0 , 0, 0, 0 };
 
-            string str[7] = { appl, amaz, tsla, mict, berk, jpm, gpldm };
-            float cur_stock[7] = { 0,0,0,0,0,0,0 };
-            for (int i = 0; i < 7; i++)
+            while (true)
             {
-                string temp = str[i]; // save in temp
-                remove(temp.begin(), temp.end(), ',');
-                cur_stock[i] = stof(temp);
-            }
+                localtime_s(&tm, &t);
+                setcolor(7, 0);
+                string appl = numbering_url(APPLE, FRONT, BACK);
+                std::printf("--");
+                string amaz = numbering_url(AMAZON, FRONT, BACK);
+                std::printf("--");
+                string tsla = numbering_url(TESLA, FRONT, BACK);
+                std::printf("--");
+                string mict = numbering_url(MICRO, FRONT, BACK);
+                std::printf("--");
+                string berk = numbering_url(BERKS, FRONT, BACK);
+                std::printf("--");
+                string jpm = numbering_url(JPMOR, FRONT, BACK);
+                std::printf("--");
+                string gpldm = numbering_url(GOLDM, FRONT, BACK);
+                std::printf("--");
 
-            FILE* fp;
-            string file_name = "./" + to_string(tm.tm_mday) + "_stock.csv";
-            fopen_s(&fp, file_name.c_str(), "a");
-            fprintf(fp, "%d-%d-%d\n%d:%d:%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n"
-                , tm.tm_year, tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec
-                , cur_stock[0], cur_stock[1], cur_stock[2], cur_stock[3]
-                , cur_stock[4], cur_stock[5], cur_stock[6]);
-            fclose(fp);
-
-            for (int k = 0; k < 7; k++)
-            {
-                if (cur_stock[k] > past_stock[k])
-                    setcolor(15, 4);
-                else if (cur_stock[k] <= past_stock[k])
-                    setcolor(15, 1);
-
-                if (cur_max[k] == 0 && cur_min[k] == 0)
+                string str[7] = { appl, amaz, tsla, mict, berk, jpm, gpldm };
+                float cur_stock[7] = { 0,0,0,0,0,0,0 };
+                for (int i = 0; i < 7; i++)
                 {
-                    cur_max[k] = cur_stock[k];
-                    cur_min[k] = cur_stock[k];
+                    string temp = str[i]; // save in temp
+                    remove(temp.begin(), temp.end(), ',');
+                    cur_stock[i] = stof(temp);
                 }
-                if (cur_stock[k] > cur_max[k])
-                    cur_max[k] = cur_stock[k];
-                if (cur_stock[k] < cur_min[k])
-                    cur_min[k] = cur_stock[k];
 
-                gotoxy(12, 2*k + 1);
-                printf("%.2f", cur_stock[k]);
-                past_stock[k] = cur_stock[k];
+                FILE* fp;
+                string file_name = "./" + to_string(tm.tm_mday) + "_stock.csv";
+                fopen_s(&fp, file_name.c_str(), "a");
+                fprintf(fp, "%d-%d-%d\n%d:%d:%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n"
+                    , tm.tm_year, tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec
+                    , cur_stock[0], cur_stock[1], cur_stock[2], cur_stock[3]
+                    , cur_stock[4], cur_stock[5], cur_stock[6]);
+                fclose(fp);
 
-                setcolor(3, 0);
-                gotoxy(0, 2 * k + 2);
-                printf("[max] %.2f", cur_max[k]);
-                gotoxy(20, 2 * k + 2);
-                printf("[min] %.2f", cur_min[k]);
-                gotoxy(40, 2 * k + 2);
-                printf("[gap] %.2f", cur_max[k] - cur_min[k]);
-
-                if (tm.tm_hour >= 16)
+                for (int k = 0; k < 7; k++)
                 {
-                    gotoxy(60, 2 * k + 2);
-                    printf("[end] max %.2f", cur_max[k]);
-                    gotoxy(80, 2 * k + 2);
-                    printf("[end] min %.2f\n", cur_min[k]); 
-                    gotoxy(100, 2 * k + 2);
-                    printf("[gap] %.2f\n", cur_max[k] - cur_min[k]);
+                    if (cur_stock[k] > past_stock[k])
+                        setcolor(15, 4);
+                    else if (cur_stock[k] <= past_stock[k])
+                        setcolor(15, 1);
+
+                    if (cur_max[k] == 0 && cur_min[k] == 0)
+                    {
+                        cur_max[k] = cur_stock[k];
+                        cur_min[k] = cur_stock[k];
+                    }
+                    if (cur_stock[k] > cur_max[k])
+                        cur_max[k] = cur_stock[k];
+                    if (cur_stock[k] < cur_min[k])
+                        cur_min[k] = cur_stock[k];
+
+                    gotoxy(12, 2 * k + 1);
+                    std::printf("%.2f", cur_stock[k]);
+                    past_stock[k] = cur_stock[k];
+
+                    setcolor(3, 0);
+                    gotoxy(0, 2 * k + 2);
+                    std::printf("[max] %.2f", cur_max[k]);
+                    gotoxy(20, 2 * k + 2);
+                    std::printf("[min] %.2f", cur_min[k]);
+                    gotoxy(40, 2 * k + 2);
+                    std::printf("[gap] %.2f", cur_max[k] - cur_min[k]);
+
+                    if (tm.tm_hour >= 16)
+                    {
+                        gotoxy(60, 2 * k + 2);
+                        std::printf("[end] max %.2f", cur_max[k]);
+                        gotoxy(80, 2 * k + 2);
+                        std::printf("[end] min %.2f\n", cur_min[k]);
+                        gotoxy(100, 2 * k + 2);
+                        std::printf("[gap] %.2f\n", cur_max[k] - cur_min[k]);
+                    }
                 }
+                //break point
+                if (tm.tm_mday >= 13 && tm.tm_sec > 0)
+                {
+                    mecro = false;
+                    break;
+                }                    
+                Sleep(10000);
             }
-            //break point
-            if tm.tm_mday > 16 ? break : ;     
-            Sleep(10000);
         }
+        gotoxy(0, 9);
+        setcolor(4, 3);
+        std::printf("Current time is %d : %d : %d\n", tm.tm_hour, tm.tm_min, tm.tm_sec);
+        std::printf("market is close. . . \n");
+        Sleep(1000);
     }
-    _getch();
     return 1;
 }
