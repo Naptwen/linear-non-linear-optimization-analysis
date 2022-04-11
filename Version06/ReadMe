@@ -1,0 +1,10 @@
+Apri 2021 
+Edit
+0.Instead of Python embedding, convert it to c++ socket
+1.new TCP/IP socket web 
+2.HTTP structure
+
+reference from http://www.zedwood.com/article/cpp-winsock-basic-http-connection
+reference from https://www.linuxhowtos.org/C_C++/socket.htm
+reference from https://www.cplusplus.com/forum/windows/109180/
+reference from https://www.delftstack.com/ko/howto/c/getaddrinfo-in-c/
