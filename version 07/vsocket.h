@@ -66,6 +66,19 @@ public:
     ~Socket(){}
     virtual void setting() = 0;
     virtual void run() = 0;
+    void socket_set(){
+        mysocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+        if(mysocket < 0){  //domain, type, protocol txp socket
+            perror("[SOCKET] : SOCKET ");
+            exit(-1);
+        } 
+        //set detail of socket
+        setsockopt(mysocket, IPPROTO_TCP, TCP_NODELAY, (const char *)&myseockt_set, sizeof(int));
+        if(mysocket < 0){
+            perror("[SOCKET] : SOCKET ");
+            exit(-1);
+        }
+    }
     friend istream& operator >> (istream& cs, Socket& ss){
         string temp;
         cs >> temp;
@@ -74,8 +87,7 @@ public:
     }
 };
 
-
-template<int type, int type2>
+template<int type>
 class ServerSocket : public Socket{
 public:
     ServerSocket(SOCKET_INFO info):Socket(info){
@@ -87,58 +99,93 @@ public:
         this->port = port;
         this->ip_addr = ip_addr;
         //creating socket
-        mysocket = socket(type, SOCK_STREAM, IPPROTO_TCP);
-        if(mysocket < 0){  //domain, type, protocol txp socket
-            perror("[SOCKET] : SOCKET ");
-            exit(-1);
-        } 
-        //set detail of socket
-        setsockopt(mysocket, IPPROTO_TCP, TCP_NODELAY, (const char *)&myseockt_set, sizeof(int));
-        if(mysocket < 0){
-            perror("[SOCKET] : SOCKET ");
-            exit(-1);
-        }
         memset(&addr, 0, sizeof(addr));
-        addr.sin_family = type2;
+        addr.sin_family = type;
         addr.sin_port   = htons(stoi(this->port));
         addr.sin_addr.s_addr = htonl(INADDR_ANY);
         memset(&addr.sin_zero, 0, 8);
-
-        if(::bind(mysocket, (sockaddr *)&addr, sizeof(sockaddr)) < 0){
-            perror("[SOCKET] : BIND ");
-            exit(-1);
-        } 
     }
     void run(){
+        socket_set();
+        if(::bind(mysocket, (sockaddr *)&addr, sizeof(addr)) < 0){
+            perror("[SOCKET] : BIND ");
+            exit(1);
+        } 
+        cout << ".......LISTENING......" << endl;
+        if(listen(mysocket, 5) < 0){
+            perror("[SOCKET] SERVER LISTEN : ");
+        }
+        cout << ".........ACCEPT......." << endl;
         unsigned int client_len;
         int client_sock;
         struct sockaddr_in clientaddr;
-        clock_t s = clock();
-        clock_t f = clock();
+        client_len = sizeof(clientaddr);
+        if((client_sock = (accept(mysocket, (sockaddr *)&clientaddr, &client_len))) > 0){
+            cout << inet_ntoa(clientaddr.sin_addr) <<endl;
+        } 
         while(1){
-            listen(mysocket, 5);
-            client_len = sizeof(clientaddr);
-            if((client_sock = accept(mysocket, (sockaddr *)&addr, &client_len)) < 0){
-                perror("[SOCKET] SERVER ACCEPT : ");
-                close(client_sock);
-            }
-            send(client_sock, "HELLO WORLD\n", 13, 0);
+            cout << ".........READ......." << endl;
             memset(&buffer, 0, BUFFERSIZE);
             if(read(client_sock, buffer, BUFFERSIZE) < 0){
                 perror("[SOCKET] SERVER READ : ");
-                close(client_sock);
             }
+            cout << buffer << endl;
+            send(client_sock, "HELLO WORLD\n", 13, 0);
+            close(client_sock);
             break;
         }
         
     }
 };
+template<int type>
+class ClientSocket : public Socket{
+public:
+    ClientSocket(SOCKET_INFO info):Socket(info){
+        cout << "CLIENT CREATED" <<endl;
+    }
+    ~ClientSocket(){}
+    void setting(){
+        cout << "CLIENT SETTING" <<endl; 
+        //creating socket
+        memset(&addr, 0, sizeof(addr));
+        addr.sin_family             = type;
+        addr.sin_port               = htons(stoi(this->port));
+        addr.sin_addr.s_addr        = inet_addr(this->ip_addr.c_str());
+        memset(&addr.sin_zero, 0, 8);
+    }
+
+    void run(){
+        socket_set();
+        cout << "CLIENT RUNNING" <<endl;
+        //connecting to website
+        cout << "...CONNECTING..." <<endl;
+        if(connect(mysocket, (sockaddr *)&addr, sizeof(addr)) < 0){
+            perror("[SOCKET] : CONNECT ");
+            exit(-1);
+        } 
+        cout << "...SENDING..." <<endl;
+        //send request message
+        if(send(mysocket, request.c_str(), request.length(), (int)0) != request.length()){
+            perror("[SOCKET] : SEND ");
+            exit(-1);
+        }  
+        //get response from website
+        if(read(mysocket, buffer, BUFFERSIZE) < 0){
+            perror("[SOCKET] SERVER READ : ");
+            exit(-1);
+        }
+        cout << buffer <<endl;
+        close(mysocket);
+    }
+};
+
+
 
 class WebSocket : public Socket{
 public:
     WebSocket(SOCKET_INFO info, string url):Socket(info){
         this->web = url;
-        cout << "WEBSOCKET CREATED\n" <<endl;
+        cout << "WEBSOCKET CREATED" <<endl;
     }
     ~WebSocket(){}
     void web_setting(){
@@ -166,7 +213,7 @@ public:
         for(tmp = host; tmp != NULL; tmp = tmp->ai_next)
             cout << "IP ADDRESS : " << inet_ntoa( ((struct sockaddr_in *)tmp->ai_addr)->sin_addr ) <<endl;
         cout << "IP PORT    : " << ((struct sockaddr_in *)host->ai_addr)->sin_port <<endl;
-        cout << "IP FAMILY  : " << (int)host->ai_family <<endl;
+        cout << "IP FAMILY  : " << ((struct sockaddr_in *)host->ai_addr)->sin_family <<endl;
         cout << "IP TYPE    : " << host->ai_socktype <<endl;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = ((struct sockaddr_in *)host->ai_addr)->sin_family;
@@ -204,6 +251,7 @@ public:
         
     }
     void run(){
+        socket_set();
         //connecting to website
         if(connect(mysocket, (sockaddr *)&addr, sizeof(sockaddr)) < 0){
             perror("[SOCKET] : CONNECT ");
@@ -224,53 +272,6 @@ public:
         exit(-1);
     }
 };
-template<int type>
-class ClientSocket : public Socket{
-public:
-    ClientSocket(SOCKET_INFO info):Socket(info){
-        cout << "CLIENT CREATED\n" <<endl;
-    }
-    ~ClientSocket(){}
-    void setting(){
-        //creating socket
-        mysocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-        if(mysocket < 0){  //domain, type, protocol txp socket
-            perror("[SOCKET] : SOCKET ");
-            exit(-1);
-        } 
-        //set detail of socket
-        setsockopt(mysocket, IPPROTO_TCP, TCP_NODELAY, (const char *)&myseockt_set, sizeof(int));
-        if(mysocket < 0){
-            perror("[SOCKET] : SOCKET ");
-            exit(-1);
-        }
-        memset(&addr, 0, sizeof(addr));
-        addr.sin_family = type;
-        addr.sin_port   = htons(stoi(this->port));
-        inet_pton(type, this->ip_addr.c_str(), &(addr.sin_addr));
-        memset(&addr.sin_zero, 0, 8);
-        
-    }
-    void run(){
-        //connecting to website
-        if(connect(mysocket, (sockaddr *)&addr, sizeof(sockaddr)) < 0){
-            perror("[SOCKET] : CONNECT ");
-            exit(-1);
-        } 
-        //send request message
-        if(send(mysocket, request.c_str(), request.length(), (int)0) != request.length()){
-            perror("[SOCKET] : SEND ");
-            exit(-1);
-        }  
-        //get response from website
-        while(resp_len > 0){
-            resp_len = recv(mysocket, (char*)&buffer, BUFFERSIZE, 0);
-            response += string(buffer).substr(0, resp_len);
-        }
-        cout << response <<endl;
-        close(mysocket);
-        
-    }
-};
+
 
 #endif
