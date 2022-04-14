@@ -265,11 +265,11 @@ public:
     void sample_setting(float* sample1, int s1size, float* sample2, int s2size){
         if(sample1 == NULL) perror("NULL SAMPLE 1 IS INPUT!");
         m1 = mean(sample1, sample1 + (s1size-1));
-        v1 = var(sample1, sample1 + (s1size-1), POPUL);
+        v1 = var(sample1, sample1 + (s1size-1), SAMPLE);
         n1 = s1size;
         if(sample1 != NULL){
             m2 = mean(sample2, sample2 + (s2size-1));
-            v2 = var(sample2, sample2 + (s2size-1), POPUL);
+            v2 = var(sample2, sample2 + (s2size-1), SAMPLE);
             n2 = s2size;
         }
     }
