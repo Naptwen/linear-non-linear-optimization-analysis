@@ -4,7 +4,9 @@ this is open source statistical analysis program
 
 15 April, 2022
 Update
-version 08 the datail is in the folder
+version 08 
+
+The datail is in the folder
 
 
 -Probaility algorithm
@@ -40,3 +42,9 @@ example:
               return 0;
           }
 ```
+
+13 April Version 07
+
+- Socket TCP/IP 
+
+- Web Server Socket connection
