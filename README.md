@@ -9,13 +9,13 @@ version 08
 The datail is in the folder
 
 
--Probaility algorithm
+- Probaility algorithm
 
 
--Null Hypothesis algorithm
+- Null Hypothesis algorithm
 
 
--CVS File reading and Sorting(Merge Sorting)
+- CVS File reading and Sorting(Merge Sorting)
 
 
 
