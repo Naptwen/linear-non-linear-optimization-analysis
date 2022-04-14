@@ -4,13 +4,21 @@ this is open source statistical analysis program
 
 15 April, 2022
 Update
-version 08 the datail is in the folder\n
--Probaility algorithm\n
--Null Hypothesis algorithm\n
--CVS File reading and Sorting(Merge Sorting)\n
+version 08 the datail is in the folder
+
+
+-Probaility algorithm
+
+
+-Null Hypothesis algorithm
+
+
+-CVS File reading and Sorting(Merge Sorting)
+
+
 
 example:
-``cs
+```cs
           #include "vstatic_method.hpp"
 
           using namespace std;
@@ -31,4 +39,4 @@ example:
               temp.show();
               return 0;
           }
-``
+```
