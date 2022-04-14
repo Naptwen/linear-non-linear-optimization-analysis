@@ -43,6 +43,7 @@ example:
           }
 ```
 result
+```
           Z FILE OPEN
           C FILE OPEN
           SAMPLE PROPORTION : 0.666002
@@ -72,7 +73,7 @@ result
           [8]    b           NULL        1230        22          
           [9]    i           NULL        100         2   
 
-
+```
 13 April Version 07
 
 - Socket TCP/IP 
