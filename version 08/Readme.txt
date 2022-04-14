@@ -1,4 +1,7 @@
 #update
+0. basic statical method algorithm
+- mean value
+- variance value
 1. probability algorithm
 - Binomial
 - Negative Binomial
