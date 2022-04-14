@@ -42,6 +42,36 @@ example:
               return 0;
           }
 ```
+result
+          Z FILE OPEN
+C FILE OPEN
+SAMPLE PROPORTION : 0.666002
+z : -2.3496
+p : 0.9857
+CVS data_test.csv is OPEN
+________________________________
+[0]    Name        Number      Money       Age         
+[1]    e           10          100         20          
+[2]    d           12          320         10          
+[3]    c           9           1000        40          
+[4]    b           NULL        1230        22          
+[5]    a           33          1000        41          
+[6]    f           99          100000      67          
+[7]    g           23          50          12          
+[8]    h           29          11          30          
+[9]    i           NULL        100         2           
+________________________________
+[0]    Name        Number      Money       Age         
+[1]    c           9           1000        40          
+[2]    e           10          100         20          
+[3]    d           12          320         10          
+[4]    g           23          50          12          
+[5]    h           29          11          30          
+[6]    a           33          1000        41          
+[7]    f           99          100000      67          
+[8]    b           NULL        1230        22          
+[9]    i           NULL        100         2   
+
 
 13 April Version 07
 
