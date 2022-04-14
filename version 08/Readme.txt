@@ -1,5 +1,7 @@
 #update
 0. basic statical method algorithm
+- factorial 
+- binomial
 - mean value
 - variance value
 1. probability algorithm
