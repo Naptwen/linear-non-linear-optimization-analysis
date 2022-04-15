@@ -1,5 +1,10 @@
 code
 ```cs
+
+#include "vstatic_method.hpp"
+
+using namespace std;
+
 int main(){
     PHANTOM bbb;
     bbb.pm1 = 0;
@@ -13,8 +18,10 @@ int main(){
     temp.show();
     temp.SORT("Money", "Name", "Age", NULL);
     temp.show();
-    temp.SELECT<float>("Number", "30", OVER);
+    temp.SELECT<float>("Money", "100", ABOVE);
+    temp.SELECT<float>("Money", "1000", BELOW);
     temp.show();
+    temp.UNSELECT();
     return 0;
 }
 ```
