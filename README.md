@@ -1,6 +1,54 @@
 # Market-Data-analysis
 
 this is open source statistical analysis program
+16 April, 2022.
+Update
+version 09
+
+- For userfriendly variable argument SORT FUNCTION 
+- CSV Multiple filtering sort (recustion function)
+- Change ref_merge function type from vector to queue
+- Sorting by Name -> Money -> Age
+```
+          Z FILE OPEN
+C FILE OPEN
+SAMPLE PROPORTION : 0.666002
+z : -2.3496
+p : 0.9857
+CVS data_test.csv is OPEN
+________________________________
+[    0]    Name        Number      Money       Age         
+[    1]    e           10          100         20          
+[    2]    d           12          320         10          
+[    3]    c           9           1000        40          
+[    4]    b           NULL        1230        22          
+[    5]    a           33          1000        41          
+[    6]    f           99          100000      67          
+[    7]    g           23          50          12          
+[    8]    h           29          11          30          
+[    9]    i           NULL        100         2           
+[   10]    j           20          100         10          
+[   11]    k           22          100         10          
+[   12]    l           24          100         10          
+[   13]    m           25          100         10          
+[   14]    n           12          100         10          
+________________________________
+[    0]    Name        Number      Money       Age         
+[    1]    a           33          1000        41          
+[    2]    b           NULL        1230        22          
+[    3]    c           9           1000        40          
+[    4]    d           12          320         10          
+[    5]    e           10          100         20          
+[    6]    f           99          100000      67          
+[    7]    g           23          50          12          
+[    8]    h           29          11          30          
+[    9]    i           NULL        100         2           
+[   10]    j           20          100         10          
+[   11]    k           22          100         10          
+[   12]    l           24          100         10          
+[   13]    m           25          100         10          
+[   14]    n           12          100         10   
+```
 
 15 April, 2022
 Update
