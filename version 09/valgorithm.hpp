@@ -31,7 +31,7 @@
 
 using namespace std;
 //typcasting idea reference from https://gist.github.com/mark-d-holmberg/862733 Thank you!
-
+//q clear efficient way idea reference from https://stackoverflow.com/questions/709146/how-do-i-clear-the-stdqueue-efficiently Thank you!
 
 //factorial
 int facto(int n){
