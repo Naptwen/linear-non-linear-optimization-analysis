@@ -1,15 +1,11 @@
 # Market-Data-analysis
 
 this is open source statistical analysis program
+
+
 16 April, 2022.
 
-
-Update
-
-
 version 09
-
-
 - Select function for > < <= >= ==
 - Color print
 - For userfriendly variable argument SORT FUNCTION 
@@ -19,10 +15,6 @@ version 09
 
 15 April, 2022
 
-
-Update
-
-
 version 08 
 
 
@@ -31,6 +23,8 @@ The datail is in the folder
 - Null Hypothesis algorithm
 - CVS File reading and Sorting(Merge Sorting)
 
-13 April Version 07
+13 April 
+
+Version 07
 - Socket TCP/IP 
 - Web Server Socket connection
