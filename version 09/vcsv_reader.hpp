@@ -203,50 +203,31 @@ public  :
         recur_sort(headers, index_list, edit_index, &print_index, &csv);
         print_order = print_index;
     }
-    /* 
-    [t] is header name
-    [stand] is the standard
-     type
-     [UNDER]    >
-     [OVER]     <
-     [BELOW]    >=
-     [ABOVE]    <=
-     [EQUAL]    ==
-    */
+
+    // [t] is header name
+    // [stand] is the standard
+    //  type
+    //  [UNDER]    >
+    //  [OVER]     <
+    //  [BELOW]    >=
+    //  [ABOVE]    <=
+    //  [EQUAL]    ==
+    void UNSELECT(){
+        selected_rows.clear();
+    }
+
     template<typename T>
-    int SELECT(string t, string stand, int type = EQUAL){
-        int i =0;
-        for(i = 0;i< csv[0].size(); i++)
-            if(csv[0][i].compare(t) == 0)
-                break;
-        vector<int> array;
-        float _num = stof(stand);
-        for(int j = 1; j < csv.size(); j++){
-            if(csv[j][i].compare("NULL") != 0)
-            switch(type){
-                case UNDER:
-                    if(_num > stof(csv[j][i])) array.push_back(j);
-                    break;
-                case OVER:
-                    if(_num < stof(csv[j][i])) array.push_back(j);
-                    break;
-                case BELOW:
-                    if(_num >= stof(csv[j][i])) array.push_back(j);
-                    break;
-                case ABOVE:
-                    if(_num <= stof(csv[j][i])) 
-                    array.push_back(j);
-                    break;
-                case EQUAL:
-                    if(_num == stof(csv[j][i])) array.push_back(j);
-                    break;
-                default:
-                    array.push_back(j);
-                    break;
-            }
+    vector<int> select(string stand, int cols, int type, vector<int> selected){}
+    template<typename T>
+    void SELECT(string t, string stand, int type = EQUAL){
+        int i = find_header(t);
+        if(!selected_rows.empty())
+            selected_rows = select<T>(stand, i, type, selected_rows);
+        else{
+            selected_rows.resize(csv.size()-1);
+            iota(selected_rows.begin(), selected_rows.end(), 1);
+            selected_rows = select<T>(stand, i, type, selected_rows);
         }
-        selected_rows = array;
-        return array.size();
     }
     //t is header name
     float SUM(string t){
@@ -294,35 +275,65 @@ public  :
 };
 
 template<>
-int CSV::SELECT<string>(string t, string num, int type){
-    int i =0;
-    for(i = 0;i< csv[0].size(); i++)
-        if(csv[0][i].compare(t) == 0)
-            break;
+vector<int> CSV::select<float>(string stand, int cols, int type, vector<int> selected){
     vector<int> array;
-    for(int j = 0; j < csv.size(); j++){
+    float _num = stof(stand);
+    for(int k = 0; k < selected.size(); k++){
+        int j = selected[k];
+        if(csv[j][cols].compare("NULL") != 0)
         switch(type){
             case UNDER:
-                if(num.compare(csv[j][i]) > 0) array.push_back(j);
+                if(_num > stof(csv[j][cols])) array.push_back(j);
                 break;
             case OVER:
-                if(num.compare(csv[j][i]) < 0)array.push_back(j);
+                if(_num < stof(csv[j][cols])) array.push_back(j);
                 break;
             case BELOW:
-                if(num.compare(csv[j][i]) >= 0) array.push_back(j);
+                if(_num >= stof(csv[j][cols])) array.push_back(j);
                 break;
             case ABOVE:
-                if(num.compare(csv[j][i]) <= 0) array.push_back(j);
+                if(_num <= stof(csv[j][cols])) 
+                array.push_back(j);
                 break;
             case EQUAL:
-                if(num.compare(csv[j][i]) == 0)array.push_back(j);
+                if(_num == stof(csv[j][cols])) array.push_back(j);
                 break;
             default:
                 array.push_back(j);
                 break;
         }
     }
-    return array.size();
+    return array;
+}
+
+template<>
+vector<int> CSV::select<string>(string stand, int cols, int type, vector<int> selected){
+    vector<int> array;
+    string num = stand;
+    for(int k = 0; k < selected.size(); k++){
+        int j = selected[k];
+        switch(type){
+            case UNDER:
+                if(num.compare(csv[j][cols]) > 0) array.push_back(j);
+                break;
+            case OVER:
+                if(num.compare(csv[j][cols]) < 0)array.push_back(j);
+                break;
+            case BELOW:
+                if(num.compare(csv[j][cols]) >= 0) array.push_back(j);
+                break;
+            case ABOVE:
+                if(num.compare(csv[j][cols]) <= 0) array.push_back(j);
+                break;
+            case EQUAL:
+                if(num.compare(csv[j][cols]) == 0)array.push_back(j);
+                break;
+            default:
+                array.push_back(j);
+                break;
+        }
+    }
+    return array;
 }
 
 
