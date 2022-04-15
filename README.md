@@ -55,8 +55,6 @@ ________________________________
 [    9]    i           NULL        100         2           
 [   10]    j           20          100         10          
 [   11]    k           22          100         10          
-<img width="563" alt="Screen Shot 2022-04-07 at 11 43 31 AM" src="https://user-images.githubusercontent.com/47798805/163597402-7c8211ed-01be-40a1-af82-1eadfbe0692a.png">
-
 [   12]    l           24          100         10          
 [   13]    m           25          100         10          
 [   14]    n           12          100         10          
