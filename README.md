@@ -2,13 +2,20 @@
 
 this is open source statistical analysis program
 16 April, 2022.
+
+
 Update
+
+
 version 09
 
+
+- Select function for > < <= >= ==
+- Color print
 - For userfriendly variable argument SORT FUNCTION 
 - CSV Multiple filtering sort (recustion function)
 - Change ref_merge function type from vector to queue
-- Sorting by Name -> Money -> Age
+- Sorting by Money -> Name -> Age
 ```cs
 int main(){
     PHANTOM bbb;
@@ -22,6 +29,8 @@ int main(){
     CSV temp("data_test.csv", true);
     temp.show();
     temp.SORT("Money", "Name", "Age", NULL);
+    temp.show();
+    temp.SELECT<float>("Number", "30", OVER);
     temp.show();
     return 0;
 }
@@ -64,12 +73,34 @@ ________________________________
 [   11]    a           33          1000        41          
 [   12]    c           9           1000        40          
 [   13]    b           NULL        1230        22          
+[   14]    f           99          100000      67          
+________________________________
+[    0]    Name        Number      Money       Age         
+[    1]    h           29          11          30          
+[    2]    g           23          50          12          
+[    3]    e           10          100         20          
+[    4]    i           NULL        100         2           
+[    5]    j           20          100         10          
+[    6]    k           22          100         10          
+[    7]    l           24          100         10          
+[    8]    m           25          100         10          
+[    9]    n           12          100         10          
+[   10]    d           12          320         10          
+[   11]    a           33          1000        41          
+[   12]    c           9           1000        40          
+[   13]    b           NULL        1230        22          
 [   14]    f           99          100000      67    
 ```
 
 15 April, 2022
+
+
 Update
+
+
 version 08 
+
+
 
 The datail is in the folder
 
