@@ -1,3 +1,6 @@
+BUF
+- Has problem when do massive data sorting by merge algorithm
+
 FIX
 - Has problem for when reading the quatation mark inside quatation
 - As counting the quatation mark with several condition checking fix 
