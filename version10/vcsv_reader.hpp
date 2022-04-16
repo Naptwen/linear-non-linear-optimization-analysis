@@ -22,43 +22,34 @@ using namespace std;
 
 vector<string> csv_spliting(string txt)
 {
+    cout << "spliting" <<endl;
     vector<string> temp;
-    stringstream ss(txt);
-    string substr;
-    string seperate;
-    for (int i = 0; i < txt.size(); i++)
-    {
-        if (txt[i] == '"')
-        {
-            int j = i + 1;
-            for (; j < txt.size(); j++)
-            {
-                if (txt[j] == '"')
-                {
-                    break;
-                }
+    int p = 0;
+    int buffer = 0;
+    string str;
+    for(int i = 0; i < txt.size(); i++){
+        if(txt[i] != '\"'){
+            if(buffer != 0)                         //if buffer is not empty
+                str.append(1, txt[i]); 
+            else if(buffer == 0 && txt[i] == ','){  //if buffer is empty and comma
+                if(str.empty())
+                    str = "NULL";
+                temp.push_back(str);
+                str.clear();
             }
-            temp.push_back(txt.substr(i + 1, j - i - 1));
-            i = j;
+            else{
+                str.append(1, txt[i]); 
+            }
         }
-        else if (txt[i] == ',')
-        {
-            int j = i + 1;
-            for (; j < txt.size(); j++)
-            {
-                if (txt[j] == ',')
-                {
-                    break;
-                }
-            }
-            if (!txt.substr(i + 1, j - i - 1).empty())
-                temp.push_back(txt.substr(i + 1, j - i - 1));
-            else
-                temp.push_back("NULL");
-            i = j - 1;
+        else{
+            if(buffer == 0)        //if buffer is empty, increase
+                buffer++;
+            else 
+                buffer--;
         }
     }
-    temp.pop_back();
+    if(!str.empty())
+        temp.push_back(str);
     return temp;
 }
 class CSV
@@ -81,14 +72,6 @@ public:
         {
             printf("CVS %s is OPEN\n", file_name.c_str());
             int num = 0;
-            if (HEADER)
-            {
-                getline(csv_file, line);
-                print_order.push_back(num);
-                csv.push_back(split<string>(line, ","));
-                header = HEADER;
-                num++;
-            }
             while (getline(csv_file, line))
             {
                 print_order.push_back(num);
@@ -115,18 +98,18 @@ public:
                 if (m.compare("NULL") != 0 && find(selected_rows.begin(), selected_rows.end(), print_order[i]) != selected_rows.end())
                 {
                     printf(GREEN);
-                    printf("%-10s  ", m.c_str());
+                    printf("%.4s  ", m.c_str());
                     printf(RESET);
                 }
                 else if (m.compare("NULL") == 0)
                 {
                     printf(RED);
-                    printf("%-10s  ", m.c_str());
+                    printf("%.4s  ", m.c_str());
                     printf(RESET);
                 }
                 else
                 {
-                    printf("%-10s  ", m.c_str());
+                    printf("%.4s  ", m.c_str());
                 }
             }
             printf("\n");
@@ -180,7 +163,7 @@ public:
             int s_col = find_header(hd); // get header cols index
             n.pop();
             //it could be the problem when the string is 1r2 like this but now just let it 
-            if (isnumber((*C)[1][s_col].front())&& isnumber((*C)[1][s_col].back()))
+            if (isnumber((*C)[1][s_col].front()) && isnumber((*C)[1][s_col].back()))
                 index_list = cell_sort<float>(s_col, index_list);
             else
                 index_list = cell_sort<string>(s_col, index_list);
