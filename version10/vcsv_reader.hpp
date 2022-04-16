@@ -339,10 +339,71 @@ public:
         }
         return ANS;
     }
+    //If selected data is exsisted, it search based on the row of selected data values
+    //If selected data is not exsisted, it search based on the all row of all data values
+    //The NULL data is always skipped
+    //ONLY NUMERIC VALUE 
+    void HTML_LINE_GRAPH(string file_name, int w, int h, string x_cols, string y_cols){
+        int x = find_header(x_cols);
+        int y = find_header(y_cols);
+        vector<float> xdata;
+        vector<float> ydata;
+        if(!selected_rows.empty()){
+            for(auto vec : selected_rows){
+                if(csv[vec][x].compare("NULL") != 0 && csv[vec][y].compare("NULL") != 0){
+                    xdata.push_back(stof(csv[vec][x]));
+                    ydata.push_back(stof(csv[vec][y]));
+                }
+            }
+        }else{
+            for(int i = 0; i < csv.size(); i++){
+                if(csv[i][x].compare("NULL") != 0 && csv[i][y].compare("NULL") != 0){
+                    xdata.push_back(stof(csv[i][x]));
+                    ydata.push_back(stof(csv[i][y]));
+                }
+            }
+        }
+        if(!xdata.empty() && !ydata.empty()){
+            ofstream html_file(file_name.data());
+            if (html_file.is_open())
+                html_2xy_line(&html_file, w, h, xdata, ydata);
+        }
+    }
+    //If selected data is exsisted, it search based on the row of selected data values
+    //If selected data is not exsisted, it search based on the all row of all data values
+    //The NULL data is always skipped
+    //ONLY NUMERIC VALUE 
+    void HTML_PLOT_GRAPH(string file_name, int w, int h, string x_cols, string y_cols){
+        int x = find_header(x_cols);
+        int y = find_header(y_cols);
+        vector<float> xdata;
+        vector<float> ydata;
+        if(!selected_rows.empty()){
+            for(auto vec : selected_rows){
+                if(csv[vec][x].compare("NULL") != 0 && csv[vec][y].compare("NULL") != 0){
+                    xdata.push_back(stof(csv[vec][x]));
+                    ydata.push_back(stof(csv[vec][y]));
+                }
+            }
+        }else{
+            for(int i = 0; i < csv.size(); i++){
+                if(csv[i][x].compare("NULL") != 0 && csv[i][y].compare("NULL") != 0){
+                    xdata.push_back(stof(csv[i][x]));
+                    ydata.push_back(stof(csv[i][y]));
+                }
+            }
+        }
+        if(!xdata.empty() && !ydata.empty()){
+            ofstream html_file(file_name.data());
+            if (html_file.is_open())
+                html_2xy_plot(&html_file, w, h, xdata, ydata);
+        }
+    }
     // SELECT IS REQUIRED
     // type
     // WIDE - show all interval
     // SHORT - show shrink interval
+    //ONLY NUMERIC VALUE 
     void HTML_HISTO_GRAPH(string file_name, int w, int h, float interval, int type = SHORT){
         ofstream html_file(file_name.data());
         if (html_file.is_open())
@@ -358,6 +419,7 @@ public:
         html_file.close();
     }
     // SELECT IS REQUIRED
+    //ONLY NUMERIC VALUE 
     void HTML_BOX_GRAPH(string file_name, int w, int h){
         ofstream html_file(file_name.data());
         if (html_file.is_open())
