@@ -1,7 +1,11 @@
 # Market-Data-analysis
 
 this is open source statistical analysis program
+17 April, 2022.
 
+version 10
+ - HTML graphic
+ - Selecting cols algorithm
 
 16 April, 2022.
 
