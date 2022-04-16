@@ -1,4 +1,4 @@
-BUF
+BUG
 - Has problem when do massive data sorting by merge algorithm
 
 FIX
