@@ -1,3 +1,8 @@
+FIX
+- Has problem for when reading the quatation mark inside quatation
+- As counting the quatation mark with several condition checking fix 
+- change the Show function as limited the char printing printf("%.4s")
+
 Update
 - HTML GRPHIC 
 - TABLE, BOX PLOT, HISTOGRAM (WIDE form and SHORT form(shrink))
