@@ -22,7 +22,6 @@ using namespace std;
 
 vector<string> csv_spliting(string txt)
 {
-    cout << "spliting" <<endl;
     vector<string> temp;
     int p = 0;
     int buffer = 0;
