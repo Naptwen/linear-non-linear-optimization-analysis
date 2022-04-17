@@ -5,7 +5,10 @@ BUG
 the algorithm https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
 
 
-can't distinguish . and - sign
+is simpliy find the positive interger number
+
+
+So it can't distinguish . and - sign
 
 
 so I changeed the condition
