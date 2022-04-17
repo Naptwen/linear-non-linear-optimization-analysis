@@ -1,6 +1,16 @@
 BUG
 
-Bug when detect number or string the negative number be detected as string
+~~Bug when detect number or string the negative number be detected as string~~
+
+the algorithm https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
+
+
+can't distinguish . and - sign
+
+
+so I changeed the condition
+
+
 
 When I tried to seperate the code and heeader part
 VSCODE compiler linker shows link error arm64 
