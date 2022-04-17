@@ -367,7 +367,6 @@ vector<int> ref_merge_sort(vector<int> index, vector<string> *F)
         D.push(A);
         A.pop();
     }
-    cout << "--------------" << endl;
     while (D.front().size() < last_size)
     { // loop the element vector size equal to the given size
         Qclear<queue<int>>(C);
