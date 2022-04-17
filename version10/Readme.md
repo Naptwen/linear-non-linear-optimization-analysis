@@ -1,5 +1,6 @@
 BUG
-- Has problem when do massive data sorting by merge algorithm
+~~Has problem when do massive data sorting by merge algorithm~~
+just a mistake for printf algorithm has no error
 
 FIX
 - Has problem for when reading the quatation mark inside quatation
