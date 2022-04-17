@@ -1,5 +1,7 @@
 BUG
 
+Bug when detect number or string the negative number be detected as string
+
 When I tried to seperate the code and heeader part
 VSCODE compiler linker shows link error arm64 
 So too lazy to find and edit the linker just put all in the hpp file
