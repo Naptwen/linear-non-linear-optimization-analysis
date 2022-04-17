@@ -30,6 +30,9 @@ Update
 - TABLE, BOX PLOT, HISTOGRAM (WIDE form and SHORT form(shrink))
 - xy Plot, line graph
 - Multiple selection 
+- String Histogram
+- Historgram Graph text graphic change
+- appending graph and table on html
 ```cs
 #include "vstatic_method.hpp"
 
