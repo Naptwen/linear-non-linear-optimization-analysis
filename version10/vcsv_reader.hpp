@@ -117,18 +117,18 @@ void CSV::SHOW()
             if (m.compare("NULL") != 0 && find(selected_rows.begin(), selected_rows.end(), print_order[i]) != selected_rows.end())
             {
                 printf(GREEN);
-                printf("%.4s  ", m.c_str());
+                printf("%4.4s  ", m.c_str());
                 printf(RESET);
             }
             else if (m.compare("NULL") == 0)
             {
                 printf(RED);
-                printf("%.4s  ", m.c_str());
+                printf("%4.4s  ", m.c_str());
                 printf(RESET);
             }
             else
             {
-                printf("%.4s  ", m.c_str());
+                printf("%4.4s  ", m.c_str());
             }
         }
         printf("\n");
@@ -331,7 +331,7 @@ void CSV::SELECT(string t, string stand, int type)
             if(is_number( csv[selected_rows[0]][i] )) //might be problem if only the first rows is a number
                 selected_rows = select<float>(stand, i, type, selected_rows);
             else
-                selected_rows = select<string>(stand, i, type, selected_rows);
+                cout << "S" <<endl, selected_rows = select<string>(stand, i, type, selected_rows);
         }
     }
 // The last input elements as NULL
@@ -535,7 +535,7 @@ if (html_file.is_open())
                     && find(selected_headers.begin(), selected_headers.end(), j) != selected_headers.end())  
                 html_file << "<td bgcolor=\"#D5F5E3\">" << csv[print_order[i]][j] <<"</td>";
             else
-                html_file << "<td>" << csv[i][j] <<"</td>";
+                html_file << "<td>" << csv[print_order[i]][j] <<"</td>";
         html_file << "</tr>\n";
     }
     html_file << "</table>\n </div>\n";
@@ -560,6 +560,9 @@ if (html_file.is_open())
 }
 html_file.close();
 }
+
+
+
 
 
 #endif
