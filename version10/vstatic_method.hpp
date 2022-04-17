@@ -1,3 +1,6 @@
+#ifndef VSTATIC_H__
+#define VSTATIC_H__
+#pragma onece
 #include <stdlib.h>
 #include <iostream>
 #include <ostream>
@@ -5,16 +8,16 @@
 #include <string.h>
 #include <math.h>
 #include <vector>
-#include "vcsv_reader.hpp"
+#include "valgorithm.hpp"
 
 #define LEFT 0
 #define RIGHT 1
 #define BOTH 2
-#define is ^
-#define put +
-#define set = 
-#define orless <=
-#define more >
+#define IS ^
+#define PUT +
+#define SET = 
+#define ORLESS <=
+#define MORE >
 
 
 class X{
@@ -24,16 +27,16 @@ public:
     float m;
     float a, b;
     float K, N, n;
-    virtual float operator set (float k)= 0;
+    virtual float operator SET (float k)= 0;
 };
 class B: public X{
 public :
-    float operator set (float k){
+    float operator SET (float k){
         return binom(n, k) * pow(p, k) * pow((1-p), n - k) ;
     }
 };
 class NB: public X{
-    float operator set (float k){
+    float operator SET (float k){
         return binom(k-1, r-1) * pow(p,k) * pow(1-p, k-r);
     }
 };
@@ -48,17 +51,17 @@ class U: public X{
     }
 };
 class H: public X{
-    float operator set (float k){
+    float operator SET (float k){
         return binom(K, k) * binom(N - K, n - k)/binom(N, n);
     }
 };
 class G: public X{
-    float operator set (float k){
+    float operator SET (float k){
         return pow((1-p), k-1) * p;
     }
 };
 class E: public X{
-    float operator set (float k){
+    float operator SET (float k){
         return m * exp(-m * k);
     }
 };
@@ -75,20 +78,20 @@ template<class T>
 class P{
 public:
     T type;
-    float operator orless(float k){
+    float operator ORLESS (float k){
         float sum = 0;
         for(int i =0; i<= (int)k; i++)
-            sum += type set i;
+            sum += type SET i;
         return sum;
     }
-    float operator more(float k){
-        float sum = *this orless k;
+    float operator MORE (float k){
+        float sum = *this ORLESS k;
         return 1 - sum;
     }
-    float operator is (float k){
-        return type set k;
+    float operator IS (float k){
+        return type SET k;
     }
-    void operator put (float data){
+    void operator PUT (float data){
         if(is_same<T, PO>::value)
             type.m = data;
         else if(is_same<T, G>::value)
@@ -96,7 +99,7 @@ public:
         else if(is_same<T, E>::value)
             type.m = data;
     }
-    void operator put (float* data){
+    void operator PUT (float* data){
         if(is_same<T, B>::value){
             type.n = data[0];
             type.p = data[1];
@@ -312,3 +315,5 @@ public:
         return sum;
     }
 };
+
+#endif

@@ -1,3 +1,7 @@
+#ifndef VAGLORITHM_H__
+#define VAGLORITHM_H__
+
+#pragma onece
 #include <vector>
 #include <string>
 #include <sstream>
@@ -6,6 +10,16 @@
 #include <queue>
 #include <set>
 #include <map>
+#include <stdlib.h>
+#include <iostream>
+#include <ostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <ctype.h>
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */
@@ -41,6 +55,50 @@ struct cmp{
 typedef struct quartile{
     float Q1, Q2, Q3, IQR, UF, UW, LF, LW;
 }QUARTILE;
+
+//-------------convinient algorithm-----------
+
+//reference by https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
+//Charles Salvia's code Thank you
+bool is_number(const string& s)
+{
+    return !s.empty() && find_if(s.begin(), s.end(), 
+    [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+}
+// q clear efficient way idea reference from https://stackoverflow.com/questions/709146/how-do-i-clear-the-stdqueue-efficiently Thank you!
+template <typename T>
+void Qclear(std::queue<T> &q)
+{
+    queue<T> empty;
+    swap(q, empty);
+}
+// typcasting idea reference from https://gist.github.com/mark-d-holmberg/862733 Thank you!
+// by Mark Holmberg
+template <typename T>
+T convert_to(const string &str)
+{
+    istringstream ss(str);
+    T var;
+    ss >> var;
+    return var;
+}
+//string split 
+template <typename T>
+vector<T> split(string txt, const char *deli)
+{
+    vector<T> temp;
+    char ch[txt.length()];
+    strcpy(ch, txt.c_str());
+    char *ptr = strtok(ch, deli);
+    while (ptr != NULL)
+    {
+        temp.push_back(convert_to<T>(ptr));
+        ptr = strtok(NULL, deli);
+    }
+    return temp;
+}
+
+//-------------probability algorithm----------------
 
 // factorial
 int facto(int n)
@@ -212,22 +270,8 @@ float varxy(vector<float> datax, vector<float> datay)
 {
     return cov(datax, datax) + 2 * cov(datax, datax) + cov(datay, datay);
 }
-// q clear efficient way idea reference from https://stackoverflow.com/questions/709146/how-do-i-clear-the-stdqueue-efficiently Thank you!
-template <typename T>
-void Qclear(std::queue<T> &q)
-{
-    queue<T> empty;
-    swap(q, empty);
-}
-// typcasting idea reference from https://gist.github.com/mark-d-holmberg/862733 Thank you!
-template <typename T>
-T convert_to(const string &str)
-{
-    istringstream ss(str);
-    T var;
-    ss >> var;
-    return var;
-}
+
+//-----reference comaparing merge algorithm------
 
 template <typename T>
 queue<int> ref_merge(queue<int> A, queue<int> B, vector<string> *C)
@@ -251,7 +295,6 @@ queue<int> ref_merge(queue<int> A, queue<int> B, vector<string> *C)
     }
     return O;
 }
-
 template <>
 queue<int> ref_merge<float>(queue<int> A, queue<int> B, vector<string> *C)
 {
@@ -274,7 +317,6 @@ queue<int> ref_merge<float>(queue<int> A, queue<int> B, vector<string> *C)
     }
     return O;
 }
-
 template <>
 queue<int> ref_merge<string>(queue<int> A, queue<int> B, vector<string> *C)
 {
@@ -297,7 +339,6 @@ queue<int> ref_merge<string>(queue<int> A, queue<int> B, vector<string> *C)
     }
     return O;
 }
-
 template <typename T>
 vector<int> ref_merge_sort(vector<int> index, vector<string> *F)
 {
@@ -317,6 +358,7 @@ vector<int> ref_merge_sort(vector<int> index, vector<string> *F)
         D.push(A);
         A.pop();
     }
+    cout << "--------------" << endl;
     while (D.front().size() < last_size)
     { // loop the element vector size equal to the given size
         Qclear<queue<int>>(C);
@@ -347,6 +389,8 @@ vector<int> ref_merge_sort(vector<int> index, vector<string> *F)
     }
     return ANS;
 }
+
+//---------merge algorithm-----------------------
 
 vector<int> merge(vector<int> A, vector<int> B)
 {
@@ -396,20 +440,7 @@ vector<int> merge_sort(vector<int> index)
     return D[0];
 }
 
-template <typename T>
-vector<T> split(string txt, const char *deli)
-{
-    vector<T> temp;
-    char ch[txt.length()];
-    strcpy(ch, txt.c_str());
-    char *ptr = strtok(ch, deli);
-    while (ptr != NULL)
-    {
-        temp.push_back(convert_to<T>(ptr));
-        ptr = strtok(NULL, deli);
-    }
-    return temp;
-}
+//------html drawing algrithm-------------
 
 void html_canvas_create(ofstream *html_file, int w, int h, string canvs_name){
     //canvas
@@ -717,3 +748,5 @@ void html_histogram<WIDE>(ofstream *html_file, int w, int h, float interval, vec
         *html_file << "</script>\n";
     }
 }
+
+#endif
