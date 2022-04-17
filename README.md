@@ -1,5 +1,9 @@
 # Market-Data-analysis
 
+17 April 2022.
+Current Linear Nonlinear optimazatin algorithm,,,,,
+
+
 this is open source statistical analysis program
 17 April, 2022.
 
