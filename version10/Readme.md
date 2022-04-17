@@ -1,6 +1,6 @@
 BUG
 
-~~Bug when detect number or string the negative number be detected as string~~
+1. ~~Bug when detect number or string the negative number be detected as string~~
 
 the algorithm https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
 
@@ -15,8 +15,8 @@ so I changeed the condition
 
 
 
-When I tried to seperate the code and heeader part
-VSCODE compiler linker shows link error arm64 
+2. When I tried to seperate the code and heeader part
+    VSCODE compiler linker shows link error arm64 
 So too lazy to find and edit the linker just put all in the hpp file
 
 ~~Has problem when do massive data sorting by merge algorithm~~
