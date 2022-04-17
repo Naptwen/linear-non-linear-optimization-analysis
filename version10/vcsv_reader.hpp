@@ -436,7 +436,7 @@ void CSV::HTML_LINE_GRAPH(string file_name, int w, int h, string x_cols, string 
             }
         }
     }else{
-        for(int i = 0; i < csv.size(); i++){
+        for(int i = 1; i < csv.size(); i++){
             if(csv[i][x].compare("NULL") != 0 && csv[i][y].compare("NULL") != 0){
                 xdata.push_back(stof(csv[i][x]));
                 ydata.push_back(stof(csv[i][y]));
