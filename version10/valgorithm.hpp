@@ -60,10 +60,19 @@ typedef struct quartile{
 
 //reference by https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
 //Charles Salvia's code Thank you
+//it has problem for distinguish negative sign and dot sign
+//so I edit this algorithm
 bool is_number(const string& s)
 {
+    return !s.empty() && find_if(s.begin() + 1, s.end(), 
+    [](char c) { return (c == '-' || c == '.')? false : !isdigit(c); }) == s.end();
+}
+//Applying above code 
+//detecting space string
+bool is_space(const string& s)
+{
     return !s.empty() && find_if(s.begin(), s.end(), 
-    [](unsigned char c) { return !std::isdigit(c); }) == s.end();
+    [](unsigned char c) { return !isspace(c); }) == s.end();
 }
 // q clear efficient way idea reference from https://stackoverflow.com/questions/709146/how-do-i-clear-the-stdqueue-efficiently Thank you!
 template <typename T>
