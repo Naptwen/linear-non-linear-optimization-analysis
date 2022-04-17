@@ -1,5 +1,8 @@
 BUG
 
+When I tried to seperate the code and heeader part
+VSCODE compiler linker shows link error arm64 
+So too lazy to find and edit the linker just put all in the hpp file
 
 ~~Has problem when do massive data sorting by merge algorithm~~
 
