@@ -1,16 +1,9 @@
 BUG
 
 1. ~~Bug when detect number or string the negative number be detected as string~~
-
 the algorithm https://stackoverflow.com/questions/4654636/how-to-determine-if-a-string-is-a-number-with-c
-
-
 is simpliy find the positive interger number
-
-
 So it can't distinguish . and - sign
-
-
 so I changeed the condition
 
 
@@ -19,12 +12,8 @@ so I changeed the condition
     VSCODE compiler linker shows link error arm64 
 So too lazy to find and edit the linker just put all in the hpp file
 
-~~Has problem when do massive data sorting by merge algorithm~~
-
-
+3. ~~Has problem when do massive data sorting by merge algorithm~~
 just a mistake for printf 
-
-
 algorithm has no error
 
 
