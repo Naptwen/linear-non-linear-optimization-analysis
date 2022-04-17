@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <numeric>
 #include <ctype.h>
+#include <math.h>
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */
@@ -524,7 +525,7 @@ void html_box_plot(ofstream *html_file, int w, int h,  vector<vector<float>> dat
 //data_2 ge the y coordainte
 //the length should be the same if not the shortest one be
 void html_2xy_plot(ofstream *html_file, int w, int h,  vector<float> data_1, vector<float> data_2){
-    string name = "xy";
+    string name = "xyP" + to_string(time(NULL));
     if(!data_1.empty() && !data_2.empty()){
         html_canvas_create(html_file, w, h, name);
         *html_file << "<script>\n";
@@ -541,30 +542,28 @@ void html_2xy_plot(ofstream *html_file, int w, int h,  vector<float> data_1, vec
         *html_file << "pen.moveTo("<< 0 << "," << h - y_padding <<")\n";
         *html_file << "pen.lineTo("<< w << "," << h - y_padding <<")\n";
         *html_file << "pen.stroke();\n";
-        float _h_ = 0;
         float _w_ = 0;
-        float xmax = *max_element(val_x.begin(), val_x.end());;
-        float ymax = *max_element(val_y.begin(), val_y.end());;
+        float _h_ = 0;
         for(int i = 0; i < sz; i ++){
-            _w_ = val_x[i] * w / xmax;
-            _h_ = h * (1 - val_y[i]) / ymax;
-            _w_ = (_w_ == w)? _w_ - x_padding : _w_ + x_padding;
-            _h_ = (_h_ == 0)? y_padding : _h_ - y_padding;
+            _w_ = (w - x_padding * 2) * val_x[i];
+            _h_ = (h - y_padding * 2) * val_y[i] + y_padding;
+            *html_file << "pen.transform(1, 0, 0, -1, 0," << h << ");\n";
             *html_file << "pen.beginPath();\n";
             *html_file << "pen.arc("<< _w_ << "," 
                                     << _h_
                                     << ", 2, 0, 2 * Math.PI);\n";
             *html_file << "pen.stroke();\n";
+            *html_file << "pen.transform(1, 0, 0, -1, 0," << h << ");\n";
             *html_file << "pen.font = \"15px Arial\";\n";
             *html_file << "pen.fillStyle = \"blue\";\n";
             //x coordinate
             *html_file << "pen.fillText(\"" << round(data_1[i] * 100)/100.0 << "\"," 
                                             << _w_ - px * 0.5  << "," 
-                                            << h - px * 0.5 << ");\n";
+                                            << h << ");\n";
             //y coordinate 
             *html_file << "pen.fillText(\"" << round(data_2[i] * 100)/100.0 << "\"," 
                                             << px/2 << "," 
-                                            << _h_<< ");\n";
+                                            << h - _h_<< ");\n";
             *html_file << "pen.stroke();\n";
         }
         *html_file << "</script>\n";
@@ -572,7 +571,7 @@ void html_2xy_plot(ofstream *html_file, int w, int h,  vector<float> data_1, vec
 }
 //x sorted line graph
 void html_2xy_line(ofstream *html_file, int w, int h,  vector<float> data_1, vector<float> data_2){
-    string name = "xy";
+    string name = "xyL" + to_string(time(NULL));
     if(!data_1.empty() && !data_2.empty()){
         html_canvas_create(html_file, w, h, name);
         *html_file << "<script>\n";
@@ -589,172 +588,243 @@ void html_2xy_line(ofstream *html_file, int w, int h,  vector<float> data_1, vec
         *html_file << "pen.moveTo("<< 0 << "," << h - y_padding <<")\n";
         *html_file << "pen.lineTo("<< w << "," << h - y_padding <<")\n";
         *html_file << "pen.stroke();\n";
-        float _h_ = 0;
-        float _w_ = 0;
+
         set<pair<float, float>> val_xy;
         set<pair<float, float>> data_xy;
         for(int i = 0; i < sz; i++){
             val_xy.insert(make_pair(val_x[i],val_y[i]));
             data_xy.insert(make_pair(data_1[i],data_2[i]));
         }
-        float xmax = next(val_xy.begin(),val_xy.size()-1)->first;
-        float ymax = next(val_xy.begin(),val_xy.size()-1)->second;
+
+        float _w_ = 0;
+        float _h_ = 0;
+
         *html_file << "pen.beginPath();\n";
         for(int i = 0; i < val_xy.size(); i ++){
             pair<float, float> val = *next(val_xy.begin(), i); //index i value of set access
             pair<float, float> data = *next(data_xy.begin(), i); //index i value of set access
-            _w_ = val.first * w / xmax;
-            _h_ = h * (1 - val.second) / ymax;
-            _w_ = (_w_ == w)? _w_ - x_padding : _w_ + x_padding;
-            _h_ = (_h_ == 0)? y_padding : _h_ - y_padding;
-            cout << val.first <<endl;
+            
+            _w_ = (w - x_padding * 2) * val_x[i];
+            _h_ = (h - y_padding * 2) * val_y[i] + y_padding;
+            *html_file << "pen.transform(1, 0, 0, -1, 0," << h << ");\n";
             *html_file << "pen.lineTo("<< _w_ << "," << _h_ <<")\n";
+            *html_file << "pen.transform(1, 0, 0, -1, 0," << h << ");\n";
             *html_file << "pen.font = \"15px Arial\";\n";
             *html_file << "pen.fillStyle = \"blue\";\n";
             //x coordinate
             *html_file << "pen.fillText(\"" << round(data.first * 100)/100.0 << "\"," 
                                             << _w_ - px * 0.5  << "," 
-                                            << h - px * 0.5 << ");\n";
+                                            << h << ");\n";
             //y coordinate 
             *html_file << "pen.fillText(\"" << round(data.second * 100)/100.0 << "\"," 
                                             << px/2 << "," 
-                                            << _h_<< ");\n";
+                                            << h - _h_<< ");\n";
         }
         *html_file << "pen.stroke();\n";
         *html_file << "</script>\n";
     }
 }
-template<int type>
-void html_histogram(ofstream *html_file, int w, int h, float interval, vector<vector<float>> data){};
+template<int type, typename T>
+void html_histogram(ofstream *html_file, int w, int h, float interval, vector<T> data){};
 template<>
-void html_histogram<SHORT>(ofstream *html_file, int w, int h, float interval, vector<vector<float>> data){
-    string name = "a";
-    for(auto vec : data){
-        name += name;
-        html_canvas_create(html_file, w, h, name);
-        *html_file << "<script>\n";
-        *html_file << "var pen = canvas.getContext(\"2d\");\n";
-        float s = 0;
-        sort(vec.begin(), vec.end());
-        map<float, int> his;
-        int ymax = 0;
-        int k = 0;
-        for(int i = 0; i < vec.size(); i++){
-            if(vec[i] <= k * interval)
-                his[k * interval] += 1;
-            else{
-                while(vec[i] > ++k * interval);
-                his[k * interval] = 1;
-            }
-            if(ymax < his[k * interval])
-                ymax = his[k * interval]; 
+void html_histogram<SHORT, float>(ofstream *html_file, int w, int h, float interval, vector<float> data){
+    string name = "histoS" + to_string(time(NULL));
+    html_canvas_create(html_file, w, h, name);
+    *html_file << "<script>\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
+    float s = 0;
+    sort(data.begin(), data.end());
+    map<float, int> his;
+    int ymax = 0;
+    int k = 0;
+    for(int i = 0; i < data.size(); i++){
+        if(data[i] <= k * interval)
+            his[k * interval] += 1;
+        else{
+            while(data[i] > ++k * interval);
+            his[k * interval] = 1;
         }
-        float y_padding = 15;
-        float x_padding = 10;
-        float bar_x = (w - x_padding * (his.size() + 1) )/ (his.size() + 1);
-        float bar_y = h * 0.8 / ymax; 
-        float rx1 = 0;
-        float rx2 = 0;
-        for(int j = 0; j <= ymax; j++){
-            //
-            *html_file << "pen.beginPath();\n"; 
-            *html_file << "pen.setLineDash( [4,2] );\n";
-            *html_file << "pen.lineWidth = 1;\n";
-            *html_file << "pen.moveTo("<< 0 << "," <<  h - bar_y * j - y_padding * 2 <<")\n";
-            *html_file << "pen.lineTo("<< w << "," <<  h - bar_y * j - y_padding * 2 <<")\n";  
-            *html_file << "pen.stroke();\n";
-            //y axis value
-            *html_file << "pen.beginPath();\n"; 
-            *html_file << "pen.fillStyle = \"black\";\n";   
-            *html_file << "pen.fillText(\"\t"<< j << "\"," << 0 << "," <<  h - bar_y * j - y_padding * 2 << ");\n";
-            *html_file << "pen.stroke();\n";
-            *html_file << "pen.stroke();\n";
-        }
-        int i = 0;
-        for(auto v = his.begin(); v != his.end(); ++v){
-            // bar graph
-            *html_file  << "pen.beginPath();\n"; 
-            *html_file  << "penlineWidth = 1;\n";
-            *html_file  << "pen.fillStyle = \"#00FF0A\";\n";
-            *html_file  << "pen.fillRect("
-                        << bar_x * i + x_padding * (i + 1)
-                        << "," << h - bar_y * v->second - y_padding * 2
-                        << "," << bar_x << "," << bar_y * v->second << ");\n";
-            // text 
-            *html_file << "pen.font = \"10px Arial\";\n";
-            *html_file << "pen.fillStyle = \"blue\";\n";   
-            rx1 = round(v->first * 100)/100.0;
-            rx2 = round((v->first - interval) * 100)/100.0;
-            *html_file << "pen.fillText(\""<< rx1 << "\"," 
-                       << bar_x * (i + 1) + x_padding * (i-2) << "," << h - y_padding - 2 << ");\n";
-            *html_file << "pen.fillText(\""<< rx2 << "\"," 
-                       << bar_x * i + x_padding * (i + 2) << "," << h - y_padding - 2 << ");\n";
-            i++;
-        }
-        *html_file << "</script>\n";
+        if(ymax < his[k * interval])
+            ymax = his[k * interval]; 
     }
-}
-template<>
-void html_histogram<WIDE>(ofstream *html_file, int w, int h, float interval, vector<vector<float>> data){
-    string name = "a";
-    for(auto vec : data){
-        name += name;
-        html_canvas_create(html_file, w, h, name);
-        *html_file << "<script>\n";
-        *html_file << "var pen = canvas.getContext(\"2d\");\n";
-        float s = 0;
-        sort(vec.begin(), vec.end());
-        map<float, int> his;
-        int ymax = 0;
-        int k = 0;
-        for(int i = 0; i < vec.size(); i++){
-            if(vec[i] <= k * interval)
-                his[k * interval] += 1;
-            else{
-                while(vec[i] > ++k * interval);
-                his[k * interval] = 1;
-            }
-            if(ymax < his[k * interval])
-                ymax = his[k * interval]; 
-        }
-        float y_padding = 15;
-        float x_padding = 10;
-        float bar_x = (w - x_padding * (k + 1) )/ (k + 1);
-        float bar_y = h * 0.8 / ymax; 
-        float rx1 = 0;
-        for(int j = 0; j <= ymax; j++){
-            //
-            *html_file << "pen.beginPath();\n"; 
-            *html_file << "pen.setLineDash( [4,2] );\n";
-            *html_file << "pen.lineWidth = 1;\n";
-            *html_file << "pen.moveTo("<< 0 << "," <<  h - bar_y * j - y_padding * 2 <<")\n";
-            *html_file << "pen.lineTo("<< w << "," <<  h - bar_y * j - y_padding * 2 <<")\n";  
-            *html_file << "pen.stroke();\n";
-            //y axis value
-            *html_file << "pen.beginPath();\n"; 
-            *html_file << "pen.fillStyle = \"black\";\n";   
-            *html_file << "pen.fillText(\"\t"<< j << "\"," << 0 << "," <<  h - bar_y * j - y_padding * 2 << ");\n";
-            *html_file << "pen.stroke();\n";
-            *html_file << "pen.stroke();\n";
-        }
-        for(int i = 0; i <= k; i++){
-            // bar graph
-            *html_file << "pen.beginPath();\n"; 
-            *html_file << "penlineWidth = 1;\n";
-            *html_file << "pen.fillStyle = \"#00FF0A\";\n";
-            *html_file  << "pen.fillRect("
-                        << bar_x * (i-1) + x_padding * (i + 2)
-                        << "," << h - bar_y * his[interval * i] - y_padding * 2
-                        << "," << bar_x << "," << bar_y * his[interval * i] << ");\n";
-            // text 
-            *html_file << "pen.font = \"10px Arial\";\n";
-            *html_file << "pen.fillStyle = \"blue\";\n";   
-            rx1 = round(interval * i * 100)/100.0;
-            *html_file << "pen.fillText(\""<< rx1 << "\"," 
-                       << bar_x * i + x_padding * (i + 2) << "," << h - y_padding - 2 << ");\n";
-        }
-        *html_file << "</script>\n";
+    float y_padding = 15;
+    float x_padding = 5;
+    float font_px = 10;
+    float bar_x = (w - x_padding * (his.size() + 1) )/ (his.size() + 1);
+    float bar_y = h * 0.8 / ymax; 
+    float rx1 = 0;
+    float rx2 = 0;
+    for(int j = 0; j <= ymax; j++){
+        //y axis value
+        *html_file << "pen.beginPath();\n"; 
+        *html_file << "pen.fillStyle = \"black\";\n";   
+        *html_file << "pen.fillText(\"\t"<< j << "\"," << 0 << "," 
+                                        <<  h - bar_y * j - y_padding * 2 
+                                        << "," << bar_x << ");\n";
+        *html_file << "pen.stroke();\n";
+        *html_file << "pen.stroke();\n";
     }
-}
+    int i = 0;
+    for(auto v = his.begin(); v != his.end(); ++v){
+        // bar graph
+        *html_file  << "pen.beginPath();\n"; 
+        *html_file  << "penlineWidth = 1;\n";
+        *html_file  << "pen.fillStyle = \"#00FF0A\";\n";
+        *html_file  << "pen.fillRect("
+                    << bar_x * i + x_padding * (i + 2)
+                    << "," << h - bar_y * v->second - y_padding * 2
+                    << "," << bar_x << "," << bar_y * v->second << ");\n";
+        i++;
+    }
+    i = 0;
+    for(auto v = his.begin(); v != his.end(); ++v){
+        // text 
+        *html_file << "pen.font = \"" << font_px << "px Arial\";\n";
+        *html_file << "pen.fillStyle = \"blue\";\n";   
+        rx1 = round(v->first * 100)/100.0;
+        rx2 = round((v->first - interval) * 100)/100.0;
+        *html_file << "pen.fillText(\""<< rx1 << "\"," 
+                    << bar_x * (i + 1) + x_padding * (i-2) << "," 
+                    << h - y_padding - font_px << ","
+                    << bar_x << ");\n";
+        *html_file << "pen.fillText(\""<< rx2 << "\"," 
+                    << bar_x * i + x_padding * (i + 2) << "," 
+                    << h - y_padding - font_px * 2 << ","
+                    << bar_x << ");\n";
+        *html_file << "pen.fillStyle = \"red\";\n";  
+        *html_file << "pen.fillText(\""<< v->second << "\"," 
+                    << bar_x * i + x_padding * (i + 1) + bar_x * 0.5 << "," 
+                    << h - bar_y * v->second - y_padding  << "," 
+                    << bar_x << ");\n";
+        i++;
+    }
+    *html_file << "</script>\n";
 
+}
+template<>
+void html_histogram<WIDE, float>(ofstream *html_file, int w, int h, float interval, vector<float> data){
+    string name = "histoW" + to_string(time(NULL));
+    html_canvas_create(html_file, w, h, name);
+    *html_file << "<script>\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
+    float s = 0;
+    sort(data.begin(), data.end());
+    map<float, int> his;
+    int ymax = 0;
+    int k = 0;
+    for(int i = 0; i < data.size(); i++){
+        if(data[i] <= k * interval)
+            his[k * interval] += 1;
+        else{
+            while(data[i] > ++k * interval);
+            his[k * interval] = 1;
+        }
+        if(ymax < his[k * interval])
+            ymax = his[k * interval]; 
+    }
+    float y_padding = 15;
+    float x_padding = 5;
+    float font_px = 10;
+    float bar_x = (w - x_padding * (k + 2) )/ (k + 2);
+    float bar_y = h * 0.8 / ymax; 
+    float rx1 = 0;
+    for(int j = 0; j <= ymax; j++){
+        //y axis value
+        *html_file << "pen.beginPath();\n"; 
+        *html_file << "pen.fillStyle = \"black\";\n";   
+        *html_file << "pen.fillText(\"\t"<< j << "\"," 
+                                        << 0 << "," 
+                                        <<  h - bar_y * j - y_padding * 2   << "," 
+                                        << bar_x << ");\n";
+        *html_file << "pen.stroke();\n";
+        *html_file << "pen.stroke();\n";
+    }
+    for(int i = 0; i <= k; i++){
+        // bar graph
+        *html_file << "pen.beginPath();\n"; 
+        *html_file << "penlineWidth = 1;\n";
+        *html_file << "pen.fillStyle = \"#00FF0A\";\n";
+        *html_file  << "pen.fillRect("
+                    << bar_x * (i-1) + x_padding * (i + 2)
+                    << "," << h - bar_y * his[interval * i] - y_padding * 2
+                    << "," << bar_x << "," << bar_y * his[interval * i] << ");\n";
+    }
+    for(int i =0; i <= k; i++){
+        // text 
+        *html_file << "pen.font = \""<< font_px << "px Arial\";\n";
+        *html_file << "pen.fillStyle = \"blue\";\n";   
+        rx1 = round(interval * i * 100)/100;
+        *html_file << "pen.fillText(\""<< rx1 << "\"," 
+                    << bar_x * i + x_padding * (i + 2) << "," << h - y_padding - 2 << "," 
+                    << bar_x << ");\n";
+        if(his[interval * i] != 0){
+        *html_file << "pen.fillStyle = \"red\";\n";  
+        *html_file << "pen.fillText(\""<< his[interval * i] << "\"," 
+                    << bar_x * (i - 0.5) + x_padding * (i + 2) << ","
+                    << h - bar_y * his[interval * i] - font_px << ","
+                    << bar_x << ");\n";
+        }
+    }
+    *html_file << "</script>\n";
+}
+template<>
+void html_histogram<SHORT, string>(ofstream *html_file, int w, int h, float interval, vector<string> data){
+    string name = "histoSS" + to_string(time(NULL));
+    html_canvas_create(html_file, w, h, name);
+    *html_file << "<script>\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
+    float s = 0;
+    sort(data.begin(), data.end());
+    map<string, int> his;
+    int ymax = 0;
+    int k = 0;
+    for(int i = 0; i < data.size(); i++){
+        his[data[i]] += 1;
+        if(ymax < his[data[i]])
+            ymax = his[data[i]]; 
+    }
+    float y_padding = 15;
+    float x_padding = 10;
+    float bar_x = (w - x_padding * (his.size() + 1) )/ (his.size() + 1);
+    float bar_y = h * 0.8 / ymax; 
+    for(int j = 0; j <= ymax; j++){
+        //y axis value
+        *html_file << "pen.beginPath();\n"; 
+        *html_file << "pen.fillStyle = \"black\";\n";   
+        *html_file << "pen.fillText(\"\t"<< j << "\"," << 0 << "," 
+                                        <<  h - bar_y * j - y_padding * 2 << ","
+                                        << bar_x << ");\n";
+        *html_file << "pen.stroke();\n";
+        *html_file << "pen.stroke();\n";
+    }
+    int i = 0;
+    for(auto v = his.begin(); v != his.end(); ++v){
+        // bar graph
+        *html_file  << "pen.beginPath();\n"; 
+        *html_file  << "penlineWidth = 1;\n";
+        *html_file  << "pen.fillStyle = \"#00FF0A\";\n";
+        *html_file  << "pen.fillRect("
+                    << bar_x * i + x_padding * (i + 1)
+                    << "," << h - bar_y * v->second - y_padding * 2
+                    << "," << bar_x << "," << bar_y * v->second << ");\n";
+        i++;
+    }
+    i = 0;
+    for(auto v = his.begin(); v != his.end(); ++v){
+        // text 
+        *html_file << "pen.font = \"10px Arial\";\n";
+        *html_file << "pen.fillStyle = \"blue\";\n";   
+        *html_file << "pen.fillText(\""<< v->first << "\"," 
+                    << bar_x * i + x_padding * (i + 1) << "," << h - y_padding - 2 << ","
+                    << bar_x << ");\n";
+        *html_file << "pen.fillStyle = \"red\";\n";  
+        *html_file << "pen.fillText(\""<< v->second << "\"," 
+                    << bar_x * i + x_padding * (i + 1) + bar_x * 0.5 << "," 
+                    << h - bar_y * v->second - y_padding << ","
+                    << bar_x << ");\n";
+        i++;
+    }
+    *html_file << "</script>\n";
+
+}
 #endif

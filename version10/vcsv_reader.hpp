@@ -66,6 +66,7 @@ public:
     vector<vector<float>> selected_data();
     
     void SHOW();
+    void SELECTSHOW();
     void SORT(const char *args, ...);
     void UNSELECT();
     void SELECT(string t, string stand, int type = ALL);
@@ -75,9 +76,10 @@ public:
     QUARTILE BOX(string col_name);
     void HTML_LINE_GRAPH(string file_name, int w, int h, string x_cols, string y_cols);
     void HTML_PLOT_GRAPH(string file_name, int w, int h, string x_cols, string y_cols);
-    void HTML_HISTO_GRAPH(string file_name, int w, int h, float interval, int type = SHORT);
+    void HTML_HISTO_GRAPH(string file_name, string col, int w, int h, float interval, int type = WIDE);
     void HTML_BOX_GRAPH(string file_name, int w, int h);
     void HTML_TABLE_DRAW(string file_name);
+    void HTML_CLEAR(string file_name){ofstream html_file(file_name.data()); html_file.close();}
 };
 
 //-------------------------------------------------------------------------------------------------------
@@ -134,6 +136,37 @@ void CSV::SHOW()
         printf("\n");
     }
 }
+void CSV::SELECTSHOW(){
+    cout << "________________________________" << endl;
+    for(int i = 0; i < csv[0].size(); i++)
+        printf("%4.4s  ", csv[0][i].c_str());
+    printf("\n");
+    for (int i = 1; i < print_order.size(); i++)
+    {
+        if(!selected_rows.empty() && find(selected_rows.begin(), selected_rows.end(), print_order[i]) != selected_rows.end()){
+            for (auto m : csv[print_order[i]])
+            {
+                if (m.compare("NULL") != 0)
+                {
+                    printf(GREEN);
+                    printf("%4.4s  ", m.c_str());
+                    printf(RESET);
+                }
+                else if (m.compare("NULL") == 0)
+                {
+                    printf(RED);
+                    printf("%4.4s  ", m.c_str());
+                    printf(RESET);
+                }
+                else
+                {
+                    printf("%4.4s  ", m.c_str());
+                }
+            }
+        printf("\n");
+        }
+    }  
+}
 // t is header name
 int CSV::find_header(string t)
 {
@@ -181,7 +214,8 @@ void CSV::recur_sort(queue<string> n, vector<int> index_list, vector<int> edit_i
         string hd = n.front();
         int s_col = find_header(hd); // get header cols index
         n.pop();
-        if (is_number((*C)[1][s_col]))
+        //it might be problem since only check middle and the first value are number or not
+        if (is_number((*C)[1][s_col]) && is_number((*C)[csv.size()/2][s_col]))
             index_list = cell_sort<float>(s_col, index_list);
         else
             index_list = cell_sort<string>(s_col, index_list);
@@ -331,7 +365,7 @@ void CSV::SELECT(string t, string stand, int type)
             if(is_number( csv[selected_rows[0]][i] )) //might be problem if only the first rows is a number
                 selected_rows = select<float>(stand, i, type, selected_rows);
             else
-                cout << "S" <<endl, selected_rows = select<string>(stand, i, type, selected_rows);
+                selected_rows = select<string>(stand, i, type, selected_rows);
         }
     }
 // The last input elements as NULL
@@ -444,7 +478,7 @@ void CSV::HTML_LINE_GRAPH(string file_name, int w, int h, string x_cols, string 
         }
     }
     if(!xdata.empty() && !ydata.empty()){
-        ofstream html_file(file_name.data());
+        ofstream html_file(file_name.data(), ios::app);
         if (html_file.is_open())
             html_2xy_line(&html_file, w, h, xdata, ydata);
     }
@@ -474,7 +508,7 @@ void CSV::HTML_PLOT_GRAPH(string file_name, int w, int h, string x_cols, string 
         }
     }
     if(!xdata.empty() && !ydata.empty()){
-        ofstream html_file(file_name.data());
+        ofstream html_file(file_name.data(), ios::app);
         if (html_file.is_open())
             html_2xy_plot(&html_file, w, h, xdata, ydata);
     }
@@ -484,24 +518,61 @@ void CSV::HTML_PLOT_GRAPH(string file_name, int w, int h, string x_cols, string 
 // WIDE - show all interval
 // SHORT - show shrink interval
 //ONLY NUMERIC VALUE 
-void CSV::HTML_HISTO_GRAPH(string file_name, int w, int h, float interval, int type){
-    ofstream html_file(file_name.data());
+void CSV::HTML_HISTO_GRAPH(string file_name, string col, int w, int h, float interval, int type){
+    ofstream html_file(file_name.data(), ios::app);
     if (html_file.is_open())
     {   
-        vector<vector<float>> data = selected_data();
-        if(!data.empty()){
-            if(type == WIDE)
-                html_histogram<WIDE>(&html_file, w, h, interval, data);
-            else
-                html_histogram<SHORT>(&html_file, w, h, interval, data);
+        int n = find_header(col);
+        vector<string> data_s;
+        vector<float> data_f;
+        if(!selected_rows.empty()){
+            //it might be the error for distinguish the vlaue is number or not
+            if(is_number(csv[selected_rows[0]][n]) && is_number(csv[selected_rows[0]][n])){
+                for(auto vec : selected_rows){
+                    if(csv[vec][n].compare("NULL") != 0){
+                        data_f.push_back(stof(csv[vec][n]));
+                    }
+                }
+                if(type == SHORT)
+                    html_histogram<SHORT, float>(&html_file, w, h, interval, data_f);
+                else
+                    html_histogram<WIDE, float>(&html_file, w, h, interval, data_f);
+            }else{
+                for(auto vec : selected_rows){
+                    if(csv[vec][n].compare("NULL") != 0){
+                        data_s.push_back(csv[vec][n]);
+                    }
+                }
+                html_histogram<SHORT, string>(&html_file, w, h, interval, data_s);
+            }
+        }else{
+            //it might be the error for distinguish the vlaue is number or not
+            if(is_number(csv[1][n]) && is_number(csv[csv.size()/2][n])){
+                for(int i = 1; i < csv.size(); i++){
+                    if(csv[i][n].compare("NULL") != 0){
+                        data_f.push_back(stof(csv[i][n]));
+                    }
+                }
+                if(type == SHORT)
+                    html_histogram<SHORT, float>(&html_file, w, h, interval, data_f);
+                else
+                    html_histogram<WIDE, float>(&html_file, w, h, interval, data_f);
+            }else{
+                for(int i = 1; i < csv.size(); i++){
+                    if(csv[i][n].compare("NULL") != 0){
+                        data_s.push_back(csv[i][n]);
+                    }
+                }
+                html_histogram<SHORT, string>(&html_file, w, h, interval, data_s);
+            } 
         }
-    }   
     html_file.close();
+    }   
 }
 // SELECT IS REQUIRED
 //ONLY NUMERIC VALUE 
 void CSV::HTML_BOX_GRAPH(string file_name, int w, int h){
-    ofstream html_file(file_name.data());
+    ofstream html_file(file_name.data(), ios::app);
     if (html_file.is_open())
     {   
         vector<vector<float>> data = selected_data();
@@ -512,7 +583,7 @@ void CSV::HTML_BOX_GRAPH(string file_name, int w, int h){
 }
 // SELECT IS REQUIRED
 void CSV::HTML_TABLE_DRAW(string file_name){
-ofstream html_file(file_name.data());
+ofstream html_file(file_name.data(), ios::app);
 if (html_file.is_open())
 {
     html_file << "<title> DATA CSV FILE </title>";
@@ -560,9 +631,6 @@ if (html_file.is_open())
 }
 html_file.close();
 }
-
-
-
 
 
 #endif
