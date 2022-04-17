@@ -16,6 +16,9 @@ So too lazy to find and edit the linker just put all in the hpp file
 just a mistake for printf 
 algorithm has no error
 
+4. ~~HTML table is not sorted~~
+just a mistake in print value algorithm fix the error
+
 
 FIX
 - Has problem for when reading the quatation mark inside quatation
