@@ -1,10 +1,15 @@
 # Market-Data-analysis
 
-17 April 2022.
+19 April 2022.
 Current Linear Nonlinear optimazatin algorithm,,,,,
+
 ____________
 
 this is open source statistical analysis program
+
+
+19 April 2022.
+- To prepare for the LP problem making the matrix algorithm with omp paraller
 
 
 17 April, 2022.
