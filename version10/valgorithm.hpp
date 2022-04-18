@@ -65,7 +65,7 @@ typedef struct quartile{
 //so I edit this algorithm
 bool is_number(const string& s)
 {
-    return !s.empty() && find_if(s.begin() + 1, s.end(), 
+    return !s.empty() && find_if(s.begin(), s.end(), 
     [](char c) { return (c == '-' || c == '.')? false : !isdigit(c); }) == s.end();
 }
 //Applying above code 
