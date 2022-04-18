@@ -2,6 +2,7 @@ April 19. 2022
 - Matrix for linear algebra
 - Echelon elimination (include Gaussian and upper triangular reduce)
 - Ax=b Solution algorithm (using Echleon, if inf many solution set the free variables are 1)
+- omp paraller for the loop 
 
 ```cs
 
