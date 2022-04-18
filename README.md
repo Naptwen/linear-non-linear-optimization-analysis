@@ -9,6 +9,9 @@ this is open source statistical analysis program
 
 
 19 April 2022.
+
+
+version 11
 - To prepare for the LP problem making the matrix algorithm with omp paraller
 
 
