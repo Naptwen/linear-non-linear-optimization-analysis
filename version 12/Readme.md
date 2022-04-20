@@ -46,6 +46,10 @@ int main(){
     LP test;
     test.READING("TEST.csv");
     test.LP_BEST();
+    if(!test.answer_x.empty()){
+        cout<<test.answer_x<<endl;
+        cout<<test.answer<<endl;
+    }
     return 0;
 }
 ```
