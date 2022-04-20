@@ -57,4 +57,4 @@ int main(){
 
 
 Copyright (c) <2022> <Useop Gim>
-    GMU license
+    GNU General Public License
