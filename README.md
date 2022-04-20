@@ -1,12 +1,14 @@
 # Market-Data-analysis
 
-19 April 2022.
-Current Linear Nonlinear optimazatin algorithm,,,,,
+20 April 2022.
+Current Nonlinear optimazatin algorithm,,,,,
 
 ____________
 
-this is open source statistical analysis program
+this is open source statistical analysis program following MIT License
 
+20 April 2022.
+-LP Simplex algorithm
 
 19 April 2022.
 
