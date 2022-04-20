@@ -16,7 +16,9 @@ The aim of this programming is to really create programming that I learn in math
 
 #SV FILE SHOULD BE THIS PATTERN
 No! space required
+
 EX)
+
 ```
     min -6x1-9x2-5x3
     
@@ -26,7 +28,8 @@ EX)
     
     x1,x2,x3>=0
 ```
-    
+TEST.CSV FILE SHOULD BE
+
 ```
 min,-6,x1,-9,x2,-5,x3
 2,x1,3,x2,1,x3,"<=",5
