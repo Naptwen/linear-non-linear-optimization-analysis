@@ -56,5 +56,5 @@ int main(){
 
 
 
-Copyright (c) <2022> <Useop Gim>
+Copyright (c) <2022> Useop Gim\
     GNU General Public License
