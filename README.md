@@ -11,6 +11,8 @@ this is open source statistical analysis program following MIT License
 
 version 12
 - LP Simplex algorithm
+- LP Two Phase algorithm
+- Update Matrix algorithm
 
 #19 April 2022.
 
