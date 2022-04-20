@@ -1,9 +1,9 @@
 20, Aprill 2022
 
-For the study again linear algebra and practical experience applying mathematics in computer programming, 
-I created this Linear Program for optimization.
-The principle algorithm is referenced from the class note by Professor, Philip E. Gill UCSD 
-Thanks to taking the class by Professor, Philip E. Gill, I could study a lot more deeply in Linear Algebra and how applying the theorem related to LP.
+For the study again linear algebra and practical experience applying mathematics in computer programming, \
+I created this Linear Program for optimization.\
+The principle algorithm is referenced from the class note by Professor, Philip E. Gill UCSD \
+Thanks to taking the class by Professor, Philip E. Gill, I could study a lot and more deeply in Linear Algebra and how applying the theorem related to LP.\
 
 - LP Phase 1 
 - LP Standard Phase 1
