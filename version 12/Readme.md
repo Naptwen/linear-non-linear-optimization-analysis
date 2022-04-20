@@ -14,8 +14,8 @@ This code is not optimized fully (I just used a lot of deep copy vectors instead
 I could shrink the code and make the optimizing algorithm but now I just let it.
 The aim of this programming is to really create programming that I learn in mathematics lectures.
 
-CSV FILE SHOULD BE THIS PATTERN
-# is number and v variable no space
+#SV FILE SHOULD BE THIS PATTERN
+No! space required
 <HEADER>
 min or max, #, v ....
 <BODY>
