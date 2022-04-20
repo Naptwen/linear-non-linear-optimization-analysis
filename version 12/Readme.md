@@ -40,9 +40,7 @@ min,-6,x1,-9,x2,-5,x3
 ```
 
 ```cs
-#include "vmatrix.hpp"
-#include "vcsv_reader.hpp"
-
+#include "vNLP.hpp"
 
 int main(){
     LP test;
