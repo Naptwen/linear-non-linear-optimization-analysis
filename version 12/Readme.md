@@ -12,7 +12,7 @@ Thanks to taking the class by Professor, Philip E. Gill, I could study a lot and
 
 This code is not optimized fully (I just used a lot of deep copy vectors instead reference)
 I could shrink the code and make the optimizing algorithm but now I just let it.
-The aim of this programming is to really create programming that I learn in mathematics lectures.
+The aim of this programming is to really create program that I learn in mathematics lectures.
 
 #SV FILE SHOULD BE THIS PATTERN
 No! space required
