@@ -22,9 +22,17 @@ min or max, #, v ....
 #,v1,#,v2....<=, >= or =, #
 
     
-EX) min -6x1-9x2-5x3
+EX)
+    
+    min -6x1-9x2-5x3
+    
+    
     2x1+3x2+x3<=5
+                 
+                 
     x1+2x2+x3>=3
+    
+    
     x1,x2,x3>=0
 
 <TEST CSV FILE>
