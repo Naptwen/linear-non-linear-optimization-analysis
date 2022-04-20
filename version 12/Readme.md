@@ -16,14 +16,8 @@ The aim of this programming is to really create programming that I learn in math
 
 #SV FILE SHOULD BE THIS PATTERN
 No! space required
-<HEADER>
-min or max, #, v ....
-<BODY>
-#,v1,#,v2....<=, >= or =, #
-
-    
 EX)
-    
+```
     min -6x1-9x2-5x3
     
     2x1+3x2+x3<=5
@@ -31,8 +25,8 @@ EX)
     x1+2x2+x3>=3
     
     x1,x2,x3>=0
-
-<TEST CSV FILE>
+```
+    
 ```
 min,-6,x1,-9,x2,-5,x3
 2,x1,3,x2,1,x3,"<=",5
