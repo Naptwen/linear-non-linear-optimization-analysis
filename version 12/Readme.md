@@ -14,6 +14,39 @@ This code is not optimized fully (I just used a lot of deep copy vectors instead
 I could shrink the code and make the optimizing algorithm but now I just let it.
 The aim of this programming is to really create programming that I learn in mathematics lectures.
 
+CSV FILE SHOULD BE THIS PATTERN
+# is number and v variable
+<HEADER>
+min or max, #, v ....
+<BODY>
+#,v1,#,v2....<=, >= or =, #
+
+    
+EX) min -6x1-9x2-5x3
+    2x1+3x2+x3<=5
+    x1+2x2+x3>=3
+    x1,x2,x3>=0
+```
+<TEST CSV FILE>
+
+min,-6,x1,-9,x2,-5,x3
+
+
+2,x1,3,x2,1,x3,"<=",5
+
+
+1,x1,2,x2,1,x3,">=",3
+
+
+1,x1,">=",0
+
+
+1,x2,">=",0
+
+
+1,x3,">=",0
+```
+
 ```cs
 #include "vmatrix.hpp"
 #include "vcsv_reader.hpp"
@@ -21,7 +54,7 @@ The aim of this programming is to really create programming that I learn in math
 
 int main(){
     LP test;
-    test.READING("LPtest2SP.csv");
+    test.READING("TEST.csv");
     test.LP_BEST();
     return 0;
 }
