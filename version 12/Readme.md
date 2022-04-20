@@ -15,7 +15,7 @@ I could shrink the code and make the optimizing algorithm but now I just let it.
 The aim of this programming is to really create programming that I learn in mathematics lectures.
 
 CSV FILE SHOULD BE THIS PATTERN
-# is number and v variable
+# is number and v variable no space
 <HEADER>
 min or max, #, v ....
 <BODY>
@@ -26,24 +26,14 @@ EX) min -6x1-9x2-5x3
     2x1+3x2+x3<=5
     x1+2x2+x3>=3
     x1,x2,x3>=0
-```
+
 <TEST CSV FILE>
-
+```
 min,-6,x1,-9,x2,-5,x3
-
-
 2,x1,3,x2,1,x3,"<=",5
-
-
 1,x1,2,x2,1,x3,">=",3
-
-
 1,x1,">=",0
-
-
 1,x2,">=",0
-
-
 1,x3,">=",0
 ```
 
