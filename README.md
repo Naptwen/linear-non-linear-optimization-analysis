@@ -5,7 +5,7 @@ Current Nonlinear optimazatin algorithm,,,,,
 
 ____________
 
-this is open source statistical analysis program following MIT License
+this is open source statistical analysis program following GNU License
 
 #20 April 2022.
 
