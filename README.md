@@ -2,7 +2,7 @@
 
 20 April 2022.
 Current Nonlinear optimazatin algorithm,,,,,\
-#All C++ and C code from 2014 to  current\
+All C++ and C code from 2014 to  current\
 Following\
 Copyright (c) <2022> <Useop Gim>\
   GNU General Public License
