@@ -9,35 +9,30 @@ Copyright (c) <2022> <Useop Gim>\
 ____________
 
 this is open source statistical analysis program following GNU License\
-#25 April 2022.
+#25 April 2022.\
+  version 13\
   - MATRIX decomposition(QR, spectacular) eigenvalue, eigenvectors, Grim Schmidt <-- still has problem in eignevector converting from decomposition
   - postfix calculator (equation coverter, equation solver)
   - derivative equation for ^n and other <-- didn't finish and were not do anymore b/c consider too many factors
                                                                                      
                                                                                      
-#20 April 2022.
-
-version 12
+#20 April 2022\
+version 12\
 - LP Simplex algorithm
 - LP Two Phase algorithm
 - Update Matrix algorithm
 
-#19 April 2022.
-
-
-version 11
+#19 April 2022.\
+version 11\
 - To prepare for the LP problem making the matrix algorithm with omp paraller
 
-
-#17 April, 2022.
-
-version 10
+#17 April, 2022.\
+version 10\
  - HTML graphic
  - Selecting cols algorithm
 
-#16 April, 2022.
-
-version 09
+#16 April, 2022.\
+version 09\
 - Select function for > < <= >= ==
 - Color print
 - For userfriendly variable argument SORT FUNCTION 
@@ -45,18 +40,14 @@ version 09
 - Change ref_merge function type from vector to queue
 - Sorting by Money -> Name -> Age
 
-#15 April, 2022
-
-version 08 
-
-
+#15 April, 2022\
+version 08 \
 The datail is in the folder
 - Probaility algorithm
 - Null Hypothesis algorithm
 - CVS File reading and Sorting(Merge Sorting)
 
-#13 April 
-
-Version 07
+#13 April \
+Version 07\
 - Socket TCP/IP 
 - Web Server Socket connection
