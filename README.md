@@ -8,7 +8,7 @@ Copyright (c) <2022> <Useop Gim>\
   GNU General Public License
 ____________
 
-this is open source statistical analysis program following GNU License
+this is open source statistical analysis program following GNU License\
 #25 April 2022.
   - MATRIX decomposition(QR, spectacular) eigenvalue, eigenvectors, Grim Schmidt <-- still has problem in eignevector converting from decomposition
   - postfix calculator (equation coverter, equation solver)
