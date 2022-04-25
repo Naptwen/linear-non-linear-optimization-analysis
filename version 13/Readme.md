@@ -9,7 +9,7 @@ For prepating non linear optimazation programming
 #problem
 when obtaining eigenvectors by using rref it has problem\
 by the real number diff with float errorvalue in reduce form\
-To solve this problem using the standarad diviation\
+To solve this problem 
 
 IDEA
 1.  Guassian normalization 
