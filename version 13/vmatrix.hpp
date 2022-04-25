@@ -33,11 +33,11 @@ template<typename T>
 void show_2d_vector(vector<vector<T>> A){
     if(A[0].size() == 1)
         for(auto vec : A)
-            printf("%-4.4f  ", vec[0]);
+            printf("%-8.8f  ", vec[0]);
     else
     for(auto vec : A){
         for(auto v : vec){
-            printf("%-4.4f  ", v);
+            printf("%-8.8f  ", v);
         }
         printf("\n");
     }
@@ -246,9 +246,13 @@ vector<int> COUNTPIVOT(vector<vector<T>> A, int sz){
 //deepcopy
 //upper triangular reduce form
 template<typename T>
-vector<vector<T>> REDUCE(vector<vector<T>> A){
+vector<vector<T>> REDUCE(vector<vector<T>> A, bool show = true){
     int k = 0;
-    while(k < A.size()){
+    if(show){
+        printf("\tORIGIN\n");
+        show_2d_vector(A);
+    }
+    while(k < A[0].size()){
         if(A[k][k] == 0){ //if diagonal is a 0
             for(int i = k + 1; i < A.size(); i++)
                 if(A[i][k] != 0){    //find not 0 rows in lower 
@@ -262,21 +266,34 @@ vector<vector<T>> REDUCE(vector<vector<T>> A){
         #pragma omp for
         for(int i = k + 1; i < A.size(); i++){
             if(A[i][k] != 0){
-                float r = A[i][k]/A[k][k];
-                for(int j = k; j < A[0].size(); j++)
-                    A[i][j] -= A[k][j] * r;
-                A[i][k] = 0; //too avoid realnumber problem
+                float r = log( abs(A[i][k]) ) - log( abs(A[k][k]) );
+                const char sign1 = dir_sign(A[i][k]);
+                const char sign2 = dir_sign(A[k][k]);
+                for(int j = 0; j < A[0].size(); j++){
+                    const char sign3 = dir_sign(A[k][j]);
+                    if(sign1 * sign2 * sign3 > 0)
+                        A[i][j] = A[i][j] - exp( log( abs(A[k][j]) ) + r);
+                    else
+                        A[i][j] = A[i][j] + exp( log( abs(A[k][j]) ) + r);
+                    if(A[i][j] < 0.00000001) //it should be the error problem
+                        A[i][j] = 0;
+                }
+                // A[i][k] = 0; //too avoid realnumber problem
             }
         }
         k++;
+    }
+    if(show){
+        printf("\tREDUCE FORM\n");
+        show_2d_vector(A);
     }
     return A;
 }
 //deepcopy
 //guassian elimination form
 template<typename T>
-vector<vector<T>> GELIMINATION(vector<vector<T>>A){
-    A = REDUCE(A);
+vector<vector<T>> GELIMINATION(vector<vector<T>>A, bool show = false){
+    A = REDUCE(A, show);
     int i = 0;
     while(i < A.size()){
         #pragma omp for
@@ -284,19 +301,25 @@ vector<vector<T>> GELIMINATION(vector<vector<T>>A){
             if(A[i][j] != 0){
                 float p  = A[i][j];
                 A[i][j] = 1; //to avoid real number problem
-                for(int k = j + 1; k < A[i].size(); k++)
-                    A[i][k] = A[i][k] / p;
+                for(int k = j + 1; k < A[i].size(); k++){
+                    const char sign = dir_sign(A[i][k]) * dir_sign(p);
+                    A[i][k] = exp(log(abs(A[i][k])) - log(abs(p))) * sign;
+                }
                 break;
             }
         i++;
+    }
+    if(show){
+        printf("\tGAUSSIAN ELIMINAION\n");
+        show_2d_vector(A);
     }
     return A;
 }
 //row echelon reduce form
 //sz is the distinguish cols index number for argument matrix
 template<typename T>
-vector<vector<T>> ROWECHELONFORM(vector<vector<T>>A, int sz){
-    vector<vector<T>> R = GELIMINATION(A);
+vector<vector<T>> ROWECHELONFORM(vector<vector<T>>A, int sz, bool show = false){
+    vector<vector<T>> R = GELIMINATION(A, show);
     #pragma omp for
     for(int i = R.size() - 1; i >= 0; i--) //from the bottom
         for(int j = 0; j < sz; j++)//find the pivot untill sz 
@@ -311,6 +334,11 @@ vector<vector<T>> ROWECHELONFORM(vector<vector<T>>A, int sz){
                 }
             break;
             }
+    if(show)
+    {
+        printf("\tRREF\n");
+        show_2d_vector(R);
+    }
     return R;
 }
 //assume A is linearly independent matrix with column basis
@@ -406,10 +434,10 @@ vector<vector<T>> COLDELETE(vector<vector<T>> mat, int i){
     return mat;
 }
 template<typename T>
-vector<T> MATRIX_SOLUTION(vector<vector<T>> mat, vector<T> var){
+vector<T> MATRIX_SOLUTION(vector<vector<T>> mat, vector<T> var, bool show = false){
     if(var.size() == mat.size()){
         vector<vector<T>> tmp = ADDCOL<T>(mat, var, mat[0].size());
-        vector<vector<T>> ans = ROWECHELONFORM<float>(tmp, tmp[0].size()-1);
+        vector<vector<T>> ans = ROWECHELONFORM<float>(tmp, tmp[0].size()-1, show);
         //find equation variables
         vector<T> temp;
         vector<T> x(mat[0].size(), 0); 
@@ -472,8 +500,11 @@ vector<vector<vector<T>>> EIGEN_DECOMPOSITION(vector<vector<T>> A, bool show = f
     sort(λ.begin(), λ.end(), greater<T>());
     for(int i = 0; i < λ.size(); i++){
         Λ = identity_matrix<T>(A.size());
-        Λ =  Λ * (float)(round(λ[i] * 1000.0)/1000.0); //to avoid real number problem
-        vector<T> v = MATRIX_SOLUTION(A - Λ, zero);
+        Λ =  Λ * λ[i]; //to avoid real number problem
+        if(show){
+            printf("\tλ * I\n"), show_2d_vector(Λ);
+        }
+        vector<T> v = MATRIX_SOLUTION(A - Λ, zero, show);
         V.push_back(v);
     }
     Λ =  identity_matrix<T>(Λ.size());
