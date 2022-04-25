@@ -6,6 +6,9 @@ For prepating non linear optimazation programming
 - #Eigen decomposition = to find eigen vector
 - #Inverse Matrix
 
+#problem
+when obtaining eigenvectors by using rref it has problem by the real number diff with float value
+
 - Equation solving algorithm 
 - #reading and converting equation = to convert equation for readable 
 - #post fix algorithm = to order for calculating
