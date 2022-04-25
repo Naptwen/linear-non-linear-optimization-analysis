@@ -13,8 +13,9 @@ To solve this problem
 
 IDEA
 1.  Guassian normalization 
-2.  log ->> $$x_{n+1,k+i} + sign(f) * ln{abs{x_{n + 1, k}}} - ln{abs{x_{n, k}}} + ln{abs{x_{n, k + i}}}$$
-3.  etc
+2.  log
+  $$x_{n+1,k+i} + sign(f) * ln{abs{x_{n + 1, k}}} - ln{abs{x_{n, k}}} + ln{abs{x_{n, k + i}}}$$
+4.  etc
 
 - Equation solving algorithm 
 - #reading and converting equation = to convert equation for readable 
