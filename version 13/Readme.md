@@ -13,8 +13,10 @@ To solve this problem
 
 IDEA
 1.  Guassian normalization 
-2.  log\
-
+2.  log
+$$
+\sqrt{p}
+$$
 $$
 x_{n+1} + sign(f) * ln{\abs{x_{n + 1}}} - ln{\abs{x_{n}}} + ln{\abs{x_{n}}}
 $$
