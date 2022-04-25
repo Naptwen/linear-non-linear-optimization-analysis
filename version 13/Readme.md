@@ -16,7 +16,7 @@ IDEA
 2.  log
 
 
-'$$x_{n+1,k} + sign(f) * e^{\ln(|x_{n+1,i}|) - \ln(|x_{n,i}|) +  \ln(|x_{n,k}|)}$$'
+$$x_{n+1,k} + sign(f) * e^{\ln(|x_{n+1,i}|) - \ln(|x_{n,i}|) +  \ln(|x_{n,k}|)}$$
 
 4.  etc
 
