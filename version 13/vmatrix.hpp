@@ -252,7 +252,7 @@ vector<vector<T>> REDUCE(vector<vector<T>> A, bool show = true){
         printf("\tORIGIN\n");
         show_2d_vector(A);
     }
-    while(k < A[0].size()){
+    while(k < A.size()){
         if(A[k][k] == 0){ //if diagonal is a 0
             for(int i = k + 1; i < A.size(); i++)
                 if(A[i][k] != 0){    //find not 0 rows in lower 
