@@ -15,7 +15,7 @@ IDEA
 1.  Guassian normalization 
 2.  log
 
-```
+```md
 $$x_{n+1,k} + sign(f) * e^{\ln(|x_{n+1,i}|) - \ln(|x_{n,i}|) +  \ln(|x_{n,k}|)}$$
 ```
 4.  etc
