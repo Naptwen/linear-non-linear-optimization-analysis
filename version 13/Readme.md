@@ -16,7 +16,7 @@ IDEA
 2.  log\
 
 $$
-x_{n+1} + sign(f) * ln{abs{x_{n + 1}}} - ln{abs{x_{n}}} + ln{abs{x_{n}}}
+x_{n+1} + sign(f) * ln{\abs{x_{n + 1}}} - ln{\abs{x_{n}}} + ln{\abs{x_{n}}}
 $$
 4.  etc
 
