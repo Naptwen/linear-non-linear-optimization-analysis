@@ -7,7 +7,14 @@ For prepating non linear optimazation programming
 - #Inverse Matrix
 
 #problem
-when obtaining eigenvectors by using rref it has problem by the real number diff with float value
+when obtaining eigenvectors by using rref it has problem\
+by the real number diff with float errorvalue in reduce form\
+To solve this problem using the standarad diviation\
+
+IDEA
+1.  Guassian normalization 
+2.  log
+3.  etc
 
 - Equation solving algorithm 
 - #reading and converting equation = to convert equation for readable 
