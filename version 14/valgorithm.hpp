@@ -161,7 +161,7 @@ vector<T>  split(string txt, string deli)
     size_t pos = 0;
     string token;
     while ((pos = txt.find(deli)) != string::npos) {
-        ans.push_back(txt.substr(0, pos));
+        ans.push_back(convert_to<T>(txt.substr(0, pos)));
         txt.erase(0, pos + deli.size());
     }
     return ans;
