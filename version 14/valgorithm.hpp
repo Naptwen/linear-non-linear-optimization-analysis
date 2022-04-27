@@ -515,10 +515,10 @@ void html_canvas_create(ofstream *html_file, int w, int h, string canvs_name){
     //canvas
     *html_file << "<canvas id = \""<< canvs_name <<"\"></canvas>\n";
     *html_file << "<script>\n";
-    *html_file << "σ2 canvas = document.getElementById(\""<< canvs_name <<"\");\n"; //get canvas elements (set the drawing area)
+    *html_file << "var canvas = document.getElementById(\""<< canvs_name <<"\");\n"; //get canvas elements (set the drawing area)
     *html_file << "canvas.width = " << w << ";\n";
     *html_file << "canvas.height = " << h << ";\n";
-    *html_file << "σ2 img = canvas.getContext(\"2d\");\n"; //to fill background
+    *html_file << "var img = canvas.getContext(\"2d\");\n"; //to fill background
     *html_file << "img.fillStyle = '#AAAAAA';\n";
     *html_file << "img.fillRect(0, 0, "<< w << "," << h << ");\n";
     *html_file << "</script>\n";
@@ -528,7 +528,7 @@ void html_box_plot(ofstream *html_file, int w, int h,  vector<vector<float>> dat
     float x_padding = w/2;
     float y_padding = h/data.size()*0.5;
     *html_file << "<script>\n";
-    *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
     for(auto vec : data){
         sort(vec.begin(), vec.end());
         vector<float> z_data = mmnz((float*)&vec[0], (float*)&vec[vec.size() - 1]);
