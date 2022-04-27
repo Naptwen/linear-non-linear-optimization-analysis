@@ -5,7 +5,7 @@ Current intergrated csv data + graph + linear + non linear + null hypothesis + b
 
 All C++ and C code from 2014 to  current\
 Following\
-Copyright (c) <2022> <Useop Gim>\
+Copyright (c) <2022> Useop Gim\
   GNU General Public License\
 ____________
 #28 April 2022.\
