@@ -13,3 +13,18 @@ However, in <valgorithm.hpp>
 3. Fix in bug and error in matrix multiplication, eigenvalue, decomposition, echelon elimination
 4. Bunch of matrix calculating algorithm 
 
+```cs
+#pragma once
+#include "vstatic_method.hpp"
+#include "vLPNLP.hpp"
+
+int main(){
+    NLP temp;
+    temp.READING("NPtest3.csv");
+    temp.PRINTF();
+    // temp.QUASI_BFGS_NEWTON_AMIJO_LINE_SEARCH({-2,-2}, true);
+    temp.THE_LEVENBERG_MARQUARDT_GAUSS_NEWTON_AMIJO_LINE_SEARCH({0.8, 0.8}, true);
+    temp.RECORDS("test.csv");
+    return 0;
+}
+```
