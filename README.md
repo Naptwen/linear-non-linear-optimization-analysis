@@ -9,11 +9,11 @@ Copyright (c) <2022> <Useop Gim>\
   GNU General Public License\
 ____________
 #28 April 2022.\
-  -bunch of Matrix algorithm 
-  -fix error in matrix algorithm for decomposition, eigenvalue, vector and others
-  -FINALLY FINISHED TO MAKE NLP algorithm 
-  --the Levenberg-Marquardt Gauss Newton Amijo Line search algorithm source code 
-  --Quasi BFGS Newton Amijo line search algorithm source code
+  - bunch of Matrix algorithm 
+  - fix error in matrix algorithm for decomposition, eigenvalue, vector and others
+  - FINALLY FINISHED TO MAKE NLP algorithm 
+  -- the Levenberg-Marquardt Gauss Newton Amijo Line search algorithm source code 
+  -- Quasi BFGS Newton Amijo line search algorithm source code
   
 this is open source statistical analysis program following GNU License\
 #25 April 2022.\
