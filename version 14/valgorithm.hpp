@@ -127,9 +127,9 @@ template <typename T>
 T convert_to(const string &str)
 {
     istringstream ss(str);
-    T σ2;
-    ss >> σ2;
-    return σ2;
+    T var;
+    ss >> var;
+    return var;
 }
 
 template <typename T>
@@ -589,7 +589,7 @@ void html_2xy_plot(ofstream *html_file, int w, int h,  vector<float> data_1, vec
     if(!data_1.empty() && !data_2.empty()){
         html_canvas_create(html_file, w, h, name);
         *html_file << "<script>\n";
-        *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+        *html_file << "var pen = canvas.getContext(\"2d\");\n";
         int sz = min(data_1.size(), data_2.size());
         vector<float> val_x = mnz((float*)&data_1[0], (float*)&data_1[sz-1]);
         vector<float> val_y = mnz((float*)&data_2[0], (float*)&data_2[sz-1]);
@@ -635,7 +635,7 @@ void html_2xy_line(ofstream *html_file, int w, int h,  vector<float> data_1, vec
     if(!data_1.empty() && !data_2.empty()){
         html_canvas_create(html_file, w, h, name);
         *html_file << "<script>\n";
-        *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+        *html_file << "var pen = canvas.getContext(\"2d\");\n";
         int sz = min(data_1.size(), data_2.size());
         vector<float> val_x = mnz((float*)&data_1[0], (float*)&data_1[sz-1]);
         vector<float> val_y = mnz((float*)&data_2[0], (float*)&data_2[sz-1]);
@@ -691,7 +691,7 @@ void html_histogram<SHORT, float>(ofstream *html_file, int w, int h, float inter
     string name = "histoS" + to_string(time(NULL));
     html_canvas_create(html_file, w, h, name);
     *html_file << "<script>\n";
-    *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
     float s = 0;
     sort(data.begin(), data.end());
     map<float, int> his;
@@ -766,7 +766,7 @@ void html_histogram<WIDE, float>(ofstream *html_file, int w, int h, float interv
     string name = "histoW" + to_string(time(NULL));
     html_canvas_create(html_file, w, h, name);
     *html_file << "<script>\n";
-    *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
     float s = 0;
     sort(data.begin(), data.end());
     map<float, int> his;
@@ -832,7 +832,7 @@ void html_histogram<SHORT, string>(ofstream *html_file, int w, int h, float inte
     string name = "histoSS" + to_string(time(NULL));
     html_canvas_create(html_file, w, h, name);
     *html_file << "<script>\n";
-    *html_file << "σ2 pen = canvas.getContext(\"2d\");\n";
+    *html_file << "var pen = canvas.getContext(\"2d\");\n";
     float s = 0;
     sort(data.begin(), data.end());
     map<string, int> his;
