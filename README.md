@@ -10,7 +10,7 @@ Copyright (c) <2022> Useop Gim\
 ____________
 #29 April 2022.\
  - Numerical Approximation for the first order derivative equation to calculate the Jaccobian and df/dx
- - Optimazation the Reduce matrix form 
+ - Optimization the Reduce matrix form 
  - PLU decompositio for the diagonally dominatn matrix for solving Jacobi method
  - Convert functino to Call by reference model
  - iteration convergence update
