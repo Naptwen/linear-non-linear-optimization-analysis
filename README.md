@@ -12,7 +12,7 @@ ____________
  - Numerical Approximation for the first order derivative equation to calculate the Jaccobian and df/dx
  - Optimization the Reduce matrix form 
  - PLU decompositio for the diagonally dominatn matrix for solving Jacobi method
- - Convert functino to Call by reference model
+ - Convert functino to Call by reference model for fix some memory issue
  - iteration convergence update
  - Some several loop bug fix
 
