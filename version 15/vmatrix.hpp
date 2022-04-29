@@ -276,14 +276,14 @@ vector<vector<K>> operator * (const vector<vector<K>> &A, const vector<K> &B){
 }
 template<typename K>
 vector<vector<K>> operator * (const vector<K> &B, const vector<vector<K>> &A){
-    if(A->size() != B->size()){
+    if(A.size() != B.size()){
         throw length_error("[vector2d] * : the size is not matching!");
     } 
     vector<vector<K>> C(1, vector<K>(A[0].size(),0));
     #pragma omp for
-    for(int  i = 0; i < B->size(); i++){
+    for(int  i = 0; i < B.size(); i++){
         K val = 0;
-        for(int  k = 0; k < B->size(); k++){
+        for(int  k = 0; k < B.size(); k++){
             #pragma omp atomic
             val += B[k] * A[k][i];
         }
