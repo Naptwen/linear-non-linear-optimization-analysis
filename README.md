@@ -8,6 +8,11 @@ Following\
 Copyright (c) <2022> Useop Gim\
   GNU General Public License\
 ____________
+#29 April 2022.\
+ - Numerical Approximation for the first order derivative equation to calculate the Jaccobian and df/dx
+ - Optimazation the Reduca matrix form 
+ - PLU decompositio for the diagonally dominatn matrix for solving Jacobi method
+
 #28 April 2022.\
   - bunch of Matrix algorithm 
   - fix error in matrix algorithm for decomposition, eigenvalue, vector and others
