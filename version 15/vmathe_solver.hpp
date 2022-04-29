@@ -3,7 +3,6 @@
 //Copyright (c) 2022. Useop Gim
 //GNU License
 using namespace std;
-using namespace VMATRIX;
 #define arithmetic operation
 #define RICHARDSON 122777
 #define TAYLOR 192877
@@ -475,7 +474,7 @@ public:
 
 };
 
-class FUNMATRIX:public VMATRIX::MATRIX<float>
+class FUNMATRIX:public MATRIX<float>
 {
 public:
     vector<vector<math_eq>> funmat;
@@ -483,7 +482,6 @@ public:
     {
         if(!formula_str.empty())
         {
-            cout << formula_str.size() << "x" << formula_str[0].size() <<endl;
             vector<vector<math_eq>> tmp(formula_str.size(), vector<math_eq>(formula_str[0].size()));
             for(int i = 0; i < tmp.size(); i++)
                 for(int j = 0; j < tmp[0].size(); j++)

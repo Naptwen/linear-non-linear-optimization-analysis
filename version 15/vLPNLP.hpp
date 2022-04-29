@@ -1,8 +1,6 @@
 #ifndef _VLPNLP_H__
 #define _VLPNLP_H__
 #include "vmathe_solver.hpp"
-#include "vcsv_reader.hpp"
-using namespace VMATRIX;
 //Copyright (c) 2022. Useop Gim
 //GNU License
 #define MSE 1 // Mean square error
@@ -201,8 +199,6 @@ public:
             while( THE_FIRST( f.Solve_formula(x + SHRINK( (a * pk) ) ) ) 
                 >  THE_FIRST(fk)  + ηa * a * THE_FIRST( ( (g^T) * pk) ) )
             {
-                cout << THE_FIRST( f.Solve_formula(x + SHRINK( (a * pk) ) ) ) << " > "
-                <<THE_FIRST(fk)  + ηa * a * THE_FIRST( ( (g^T) * pk) ) <<endl;
                 a = rc * a;
             }
             dk = a * pk; 

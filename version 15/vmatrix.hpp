@@ -140,7 +140,7 @@ vector<K> operator * (const K &c, const vector<K> &A){
     vector<K> ans(A.size());
     #pragma omp for
     for(int i = 0; i < A.size(); i++)
-        ans[i] = A[i] * c;
+        ans[i] = c * A[i]; 
     return ans;
 }
 template<typename K>
@@ -148,7 +148,7 @@ vector<K> operator * (const vector<K> &A, const K &c){
     vector<K> ans(A.size());
     #pragma omp for
     for(int i = 0; i < A.size(); i++)
-        ans[i] = c * A[i];
+        ans[i] = A[i] * c;
     return ans;
 }
 template<typename K>
@@ -365,7 +365,6 @@ K norm1(const vector<vector<K>> &A){
 }
 template<typename K>
 K Least_sqaures(const vector<vector<K>> &A){
-    show_vector(A * vectorTranspose(A));
     return (A * vectorTranspose(A))[0][0];
 }
 template<typename K>
@@ -813,6 +812,7 @@ template<typename K>
 vector<K> JACOBI_SOLVE_METHOD(const vector<vector<K>> &A, const vector<K> &b , bool show = false)
 {
     //if diagonally dominant matrix
+    vector<vector<K>> D(A.size(), vector<K>(A[0].size(), 0)); 
     vector<vector<K>> invD(A.size(), vector<K>(A[0].size(), 0));    //inverse strict Diagonal triangular matrix
     vector<vector<K>> SLU(A.size(), vector<K>(A[0].size(), 0));      //negative strict Upper triangular matrix
     vector<vector<K>> B = b^T;
@@ -824,7 +824,7 @@ vector<K> JACOBI_SOLVE_METHOD(const vector<vector<K>> &A, const vector<K> &b , b
             if(i == j)
             {
                 if(A[i][j] == 0) throw logic_error("[JACOBI_SOLVE_METHOD] : Diagonal is zero!");
-                else invD[i][j] = 1/A[i][j];
+                else invD[i][j] = 1/A[i][j], D[i][j] = A[i][j];
             }
             else if(i < j)
             {
@@ -843,10 +843,9 @@ vector<K> JACOBI_SOLVE_METHOD(const vector<vector<K>> &A, const vector<K> &b , b
     while(true)
     {
         xk = invD * (SLU * x + B);
-        if(iter_error(x,xk,r) == 0) //has iteration error check problem 
-            break;
+        if(x == xk) break;
+        else if( norm2(SHRINK(A * xk - B)) < 0.00001f) break;
         x = xk;
-        r++;
     }
     return SHRINK(x);
 }
@@ -903,7 +902,7 @@ vector<K> MATRIX_SOLUTION(const vector<vector<K>> &mat, const vector<K> &var, bo
             for(int i = 0; i < mat.size(); i++)
             {
                 max = abs(mat[i][i]);
-                if(mat[i][i] == 0)
+                if(max == 0)
                     return REDUCE_SOLVE_METHOD(mat, var, show);
                 for(int j = 0; j < mat[0].size(); j++) //check it is diagonally dominant matrix
                     if(i != j && max < abs(mat[i][j]) )
