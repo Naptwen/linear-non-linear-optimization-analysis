@@ -12,6 +12,9 @@ ____________
  - Numerical Approximation for the first order derivative equation to calculate the Jaccobian and df/dx
  - Optimazation the Reduca matrix form 
  - PLU decompositio for the diagonally dominatn matrix for solving Jacobi method
+ - Convert functino to Call by reference model
+ - iteration convergence update
+ - Some several loop bug fix
 
 #28 April 2022.\
   - bunch of Matrix algorithm 
