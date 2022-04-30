@@ -8,6 +8,9 @@ Following\
 Copyright (c) <2022> Useop Gim\
   GNU General Public License\
 ____________
+#30 April 2022.\
+ - Cubic spline
+ - Some of 3D plot graph
 #29 April 2022.\
  - Numerical Approximation for the first order derivative equation to calculate the Jaccobian and df/dx
  - Optimization the Reduce matrix form 
