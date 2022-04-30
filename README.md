@@ -1,6 +1,6 @@
 # Market-Data-analysis
 
-28 April 2022.
+30 April 2022.
 Current intergrated csv data + graph + linear + non linear + null hypothesis + business analyzing\
 
 All C++ and C code from 2014 to  current\
