@@ -21,4 +21,4 @@ int main()
     temp.HTML_LINE_GRAPH("test.html", 500, 500,"A", "G");
     return 0;
 }
-5. ```
+```
