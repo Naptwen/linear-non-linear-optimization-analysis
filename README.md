@@ -1,5 +1,4 @@
-# Market-Data-analysis
-
+# linear non linear optimization
 30 April 2022.
 Current math
 
